@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="841.0" prefWidth="1394.0" style="-fx-background-color:#32CD32;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="MainPane" prefHeight="841.0" prefWidth="1394.0" style="-fx-background-color:#32CD32;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.samochod_gui_2.SamochodController">
    <children>
       <MenuBar cache="true" layoutY="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <menus>
@@ -27,20 +27,20 @@
       </MenuBar>
       <Accordion layoutY="23.0" prefHeight="152.0" prefWidth="234.0">
         <panes>
-          <TitledPane animated="false" prefHeight="199.0" prefWidth="234.0" text="Samochód">
+          <TitledPane fx:id="CarBox" animated="false" prefHeight="199.0" prefWidth="234.0" text="Samochód">
                <content>
-                  <AnchorPane prefHeight="357.0" prefWidth="233.0">
+                  <AnchorPane fx:id="CarPane" prefHeight="357.0" prefWidth="233.0">
                      <children>
                         <Label layoutX="14.0" layoutY="1.0" prefHeight="26.0" prefWidth="49.0" text="Model" />
-                        <TextField layoutX="67.0" layoutY="1.0" prefHeight="26.0" prefWidth="144.0" />
+                        <TextField fx:id="ModelTextBox" editable="false" layoutX="67.0" layoutY="1.0" prefHeight="26.0" prefWidth="144.0" />
                         <Label layoutX="14.0" layoutY="34.0" text="nr. Rejestracyjny" />
-                        <TextField layoutX="114.0" layoutY="30.0" prefHeight="26.0" prefWidth="97.0" />
+                        <TextField fx:id="SerialNumberTextBox" editable="false" layoutX="114.0" layoutY="30.0" prefHeight="26.0" prefWidth="97.0" />
                         <Label layoutX="14.0" layoutY="63.0" text="Waga" />
-                        <TextField layoutX="74.0" layoutY="59.0" prefHeight="26.0" prefWidth="138.0" />
+                        <TextField fx:id="MassTextBox" layoutX="74.0" layoutY="59.0" prefHeight="26.0" prefWidth="138.0" />
                         <Label layoutX="15.0" layoutY="94.0" text="Prędkość" />
-                        <TextField layoutX="78.0" layoutY="89.0" prefHeight="26.0" prefWidth="136.0" />
-                        <Button layoutX="31.0" layoutY="129.0" mnemonicParsing="false" text="Włącz" />
-                        <Button layoutX="92.0" layoutY="129.0" mnemonicParsing="false" text="Wyłącz" />
+                        <TextField fx:id="SpeedTextBox" layoutX="78.0" layoutY="89.0" prefHeight="26.0" prefWidth="136.0" />
+                        <Button fx:id="startEngine" layoutX="31.0" layoutY="129.0" mnemonicParsing="false" onAction="#onEngineStartClick" text="Włącz" />
+                        <Button fx:id="EngineStopButton" layoutX="92.0" layoutY="129.0" mnemonicParsing="false" onAction="#onEngineStopButtonClick" text="Wyłącz" />
                         <Button layoutX="153.0" layoutY="129.0" mnemonicParsing="false" text="Button" />
                      </children>
                   </AnchorPane>
@@ -80,8 +80,8 @@
                   <Label layoutX="16.0" layoutY="18.0" text="Nazwa" />
                   <Label layoutX="17.0" layoutY="47.0" prefHeight="18.0" prefWidth="33.0" text="Cena" />
                   <Label layoutX="16.0" layoutY="108.0" text="Obroty" />
-                  <TextField layoutX="60.0" layoutY="104.0" prefHeight="26.0" prefWidth="163.0" />
-                  <Button layoutX="45.0" layoutY="142.0" mnemonicParsing="false" text="Dodaj gazu" />
+                  <TextField fx:id="RadialSpeedBox" editable="false" layoutX="60.0" layoutY="104.0" prefHeight="26.0" prefWidth="163.0" />
+                  <Button fx:id="IncreaseSpeedButton" layoutX="45.0" layoutY="142.0" mnemonicParsing="false" onAction="#onIncreaseSpeedButtonClick" text="Dodaj gazu" />
                   <Button layoutX="131.0" layoutY="142.0" mnemonicParsing="false" text="Upuść Gazu" />
                </children>
             </AnchorPane>
