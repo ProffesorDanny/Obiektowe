@@ -30,6 +30,7 @@ public class SkrzyniaBiegow extends Komponent
     public int getIloscBiegow() {
         return iloscBiegow;
     }
+    public Sprzeglo getSprzeglo() {return sprzeglo;}
 
     public SkrzyniaBiegow(int iloscBiegow, int waga, int cena, String nazwa, Sprzeglo sprzeglo)
     {

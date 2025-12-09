@@ -14,7 +14,6 @@ public class Samochod {
     {
         stanWlacznia = silnik.uruchom(stanWlacznia);
     }
-
     public void wylacz()
     {
         stanWlacznia = silnik.zatrzymaj(stanWlacznia);
@@ -31,10 +30,22 @@ public class Samochod {
     {
         return pozycja;
     }
+    public Silnik getSilnik()
+    {
+        return silnik;
+    }
+    public SkrzyniaBiegow getSkrzyniaBiegow()
+    {
+        return skrzyniaBiegow;
+    }
     public void DodajGazu()
     {
         silnik.zwiekrzObroty(400);
 
+    }
+    public void  UpuscGazu()
+    {
+        silnik.zmniejszObroty(400);
     }
 
     public Samochod(int waga, String model, Pozycja pozycja, Silnik silnik, SkrzyniaBiegow skrzyniaBiegow, int nrRejestru)
