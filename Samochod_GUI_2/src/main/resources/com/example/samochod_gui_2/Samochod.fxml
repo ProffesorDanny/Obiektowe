@@ -106,13 +106,13 @@
     </TitledPane>
       <Button fx:id="addCar" layoutX="864.0" layoutY="27.0" mnemonicParsing="false" onAction="#onAddCarClick" text="Dodaj Nowy" />
       <Button layoutX="972.0" layoutY="27.0" mnemonicParsing="false" text="Usuń" />
-      <ComboBox editable="true" layoutX="626.0" layoutY="27.0" prefHeight="26.0" prefWidth="206.0" />
+      <ComboBox fx:id="choiceCarBox" layoutX="626.0" layoutY="27.0" prefHeight="26.0" prefWidth="206.0" />
       <Label layoutX="526.0" layoutY="26.0" text="Samochód:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ImageView fitHeight="38.0" fitWidth="70.0" layoutX="238.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="carImageView" fitHeight="38.0" fitWidth="70.0" layoutX="238.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@SAM.png" />
          </image></ImageView>

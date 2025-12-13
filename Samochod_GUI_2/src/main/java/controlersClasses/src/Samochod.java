@@ -2,7 +2,7 @@ package controlersClasses.src;
 
 public class Samochod {
     private boolean stanWlacznia;
-    private int nrRejestru;
+    private String nrRejestru;
     private String model;
     private int predkoscMax;
     private SkrzyniaBiegow skrzyniaBiegow;
@@ -48,7 +48,7 @@ public class Samochod {
         silnik.zmniejszObroty(400);
     }
 
-    public Samochod(int waga, String model, Pozycja pozycja, Silnik silnik, SkrzyniaBiegow skrzyniaBiegow, int nrRejestru)
+    public Samochod(int waga, String model, Pozycja pozycja, Silnik silnik, SkrzyniaBiegow skrzyniaBiegow, String nrRejestru)
         {
             this.waga = waga;
             this.model = model;
@@ -61,5 +61,10 @@ public class Samochod {
 
 
         }
+    @Override
+    public String toString() {
+        // This is what the ComboBox will display by default now
+        return model + " ($" + waga + ")";
+    }
 
 }
