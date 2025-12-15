@@ -1,9 +1,9 @@
-package com.example.samochod_gui_2;
+package com.example.projekt_windy;
 
 import javafx.application.Application;
 
 public class Launcher {
     public static void main(String[] args) {
-        Application.launch(SamochodApplication.class, args);
+        Application.launch(BudynekApplication.class, args);
     }
 }
