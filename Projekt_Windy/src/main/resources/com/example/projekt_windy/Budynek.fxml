@@ -50,9 +50,15 @@
                                                             </AnchorPane>
                                                         </items>
                                                       </SplitPane>
+                                                      <Button fx:id="thirdFloorUpButton" layoutX="40.0" layoutY="76.0" mnemonicParsing="false" onAction="#onThirdFloorUpButtonClick" text="Góra" />
+                                                      <Button fx:id="thirdFloorDownButton" layoutX="43.0" layoutY="117.0" mnemonicParsing="false" onAction="#onThirdFloorDownButtonClick" text="Dół" />
                                                    </children>
                                                 </AnchorPane>
-                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" SplitPane.resizableWithParent="false" />
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" SplitPane.resizableWithParent="false">
+                                                   <children>
+                                                      <Button fx:id="secondFloorUpButton" layoutX="39.0" layoutY="84.0" mnemonicParsing="false" onAction="#onSecondFloorUpButtonClick" text="Góra" />
+                                                      <Button fx:id="secondFloorDownButton" layoutX="42.0" layoutY="129.0" mnemonicParsing="false" onAction="#onSecondFloorDownButtonClick" text="Dół" />
+                                                   </children></AnchorPane>
                                             </items>
                                           </SplitPane>
                                        </children>
@@ -61,8 +67,16 @@
                                        <children>
                                           <SplitPane dividerPositions="0.5" layoutX="252.0" layoutY="199.0" orientation="VERTICAL" prefHeight="535.2" prefWidth="1685.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <items>
-                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" SplitPane.resizableWithParent="false" />
-                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" SplitPane.resizableWithParent="false" />
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" SplitPane.resizableWithParent="false">
+                                                   <children>
+                                                      <Button fx:id="firstFloorUpButton" layoutX="39.0" layoutY="91.0" mnemonicParsing="false" onAction="#onFirstFloorUpButtonClick" text="Góra" />
+                                                      <Button fx:id="firstFloorDownButton" layoutX="43.0" layoutY="129.0" mnemonicParsing="false" onAction="#onFirstFloorDownButtonClick" text="Dół" />
+                                                   </children></AnchorPane>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" SplitPane.resizableWithParent="false">
+                                                   <children>
+                                                      <Button fx:id="parterUpButton" layoutX="41.0" layoutY="78.0" mnemonicParsing="false" onAction="#onParterUpButtonClick" text="Góra" />
+                                                      <Button fx:id="parterDownButton" layoutX="45.0" layoutY="129.0" mnemonicParsing="false" onAction="#onParterDownButtonClick" text="Dół" />
+                                                   </children></AnchorPane>
                                             </items>
                                           </SplitPane>
                                        </children>

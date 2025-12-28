@@ -1,23 +1,27 @@
 package com.example.samochod_gui_2;
 
 import controlersClasses.src.*;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 
-public class SamochodController {
+public class SamochodController implements Listener {
         static Samochod currentsam;
         static Pozycja defaultPos = new Pozycja(0,0);
         static Silnik engine1 = new Silnik(100,200,"W40",7000);
@@ -28,13 +32,15 @@ public class SamochodController {
     }
 
     public ComboBox<Samochod> choiceCarBox;
-    ObservableList<Samochod> animals = FXCollections.observableArrayList(
+    public VBox mapa;
+    ObservableList<Samochod> cars = FXCollections.observableArrayList(
     );
 
 
     public void addCarToList(String model, String id, int waga, int maxspeed){
         Samochod sam = new Samochod(waga,model,defaultPos,engine1,b1,id);
         choiceCarBox.getItems().add(sam);
+        choiceCarBox.getSelectionModel().selectFirst();
     }
     public TextField SpeedTextBox;
     public TextField MassTextBox;
@@ -115,6 +121,10 @@ public class SamochodController {
         runsPriceTextField.setText(String.valueOf(currentsam.getSkrzyniaBiegow().getCena()));
         runsRunTextField.setText(String.valueOf(currentsam.getSkrzyniaBiegow().getAktualnyBieg()));
         SpeedTextBox.setText(String.valueOf(currentsam.getAktpredkosc()));
+        Platform.runLater(()->{
+            carImageView.setTranslateX(currentsam.getPozycja().getX());
+            carImageView.setTranslateY(currentsam.getPozycja().getY());
+        });
     }
     public void initialize() {
         System.out.println("HelloController initialized");
@@ -126,6 +136,17 @@ public class SamochodController {
         carImageView.setFitHeight(20);
         carImageView.setTranslateX(0);
         carImageView.setTranslateY(0);
+        mapa.setOnMouseClicked(event -> {
+            double x = event.getX();
+            double y = event.getY();
+            Pozycja nowaPozycja = new Pozycja(x, y);
+            currentsam.jedzDo(nowaPozycja);
+        });
+        choiceCarBox.setItems(cars);
+        choiceCarBox.setOnAction(event -> {
+            currentsam = choiceCarBox.getSelectionModel().getSelectedItem();
+            refresh();
+        });
     }
 
     public void onDecreaseRunClick(ActionEvent actionEvent) {
@@ -142,6 +163,24 @@ public class SamochodController {
             SpeedTextBox.setText(String.valueOf(currentsam.getAktpredkosc()));
         }
 
+    }
+
+
+    public void onWipeCarClick(ActionEvent actionEvent) {
+        cars.remove(currentsam);
+        choiceCarBox.getSelectionModel().selectFirst();
+    }
+    public void pokazBlad(String wiadomosc)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Błąd");
+        alert.setHeaderText(null);
+        alert.setContentText(wiadomosc);
+        alert.showAndWait();
+    }
+    @Override
+    public void update() {
+        refresh();
     }
 }
 

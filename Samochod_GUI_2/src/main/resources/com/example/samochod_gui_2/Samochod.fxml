@@ -105,7 +105,7 @@
       </content>
     </TitledPane>
       <Button fx:id="addCar" layoutX="864.0" layoutY="27.0" mnemonicParsing="false" onAction="#onAddCarClick" text="Dodaj Nowy" />
-      <Button layoutX="972.0" layoutY="27.0" mnemonicParsing="false" text="Usuń" />
+      <Button fx:id="wipeCar" layoutX="972.0" layoutY="27.0" mnemonicParsing="false" onAction="#onWipeCarClick" text="Usuń" />
       <ComboBox fx:id="choiceCarBox" layoutX="626.0" layoutY="27.0" prefHeight="26.0" prefWidth="206.0" />
       <Label layoutX="526.0" layoutY="26.0" text="Samochód:">
          <font>
@@ -116,5 +116,6 @@
          <image>
             <Image url="@SAM.png" />
          </image></ImageView>
+      <VBox fx:id="mapa" layoutX="238.0" layoutY="53.0" prefHeight="786.0" prefWidth="1154.0" />
    </children>
 </AnchorPane>
