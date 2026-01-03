@@ -1,3 +1,3 @@
 public interface Listener {
-    void action();
+    void action(byte way, int pietro);
 }

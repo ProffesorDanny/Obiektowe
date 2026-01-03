@@ -1,7 +1,9 @@
+package controlersClasses.src;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Winda extends Urzadzenie implements Runnable, Listener {
+public class Winda extends Urzadzenie implements Listener, Runnable {
     static private ArrayList<Double> przyjeteZadaniaOd = new ArrayList<>();
     static private ArrayList<Integer> przyjeteZadaniaWindy = new ArrayList<>();
     static private int freeId = 0;
@@ -13,6 +15,10 @@ public class Winda extends Urzadzenie implements Runnable, Listener {
     private int id;
     private List<Informer> pietra = new ArrayList<>();
     private List<Boolean> zadania = new ArrayList<>();
+
+    public double getWyskosc() {
+        return wyskosc;
+    }
 
     public void jedz(boolean kierunek,double destynacja, double odstep) throws Exception {
         if (this.getObciazenie() > this.getObciazenie_max()) {
@@ -47,8 +53,8 @@ public class Winda extends Urzadzenie implements Runnable, Listener {
         this.setObciazenie(ladunek);
     }
 
-    public void action(byte way, int pietro) {
-        this.elekcja(pietro,way);
+    public void action(Object... args) {
+        this.elekcja((int)args[0],(byte)args[1]);
     }
 
     public synchronized void elekcja(int pietro, byte kierunek) {

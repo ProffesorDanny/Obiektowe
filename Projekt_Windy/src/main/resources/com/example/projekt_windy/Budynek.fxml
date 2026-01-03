@@ -21,10 +21,11 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
                            <children>
-                              <ImageView fitHeight="204.0" fitWidth="199.0" layoutY="758.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="elevatorOne" fitHeight="204.0" fitWidth="199.0" layoutY="758.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@WindaPro.png" />
                                  </image></ImageView>
+                              <VBox fx:id="shaftOne" layoutX="4.0" layoutY="7.0" prefHeight="955.0" prefWidth="100.0" />
                            </children></AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
                            <children>
