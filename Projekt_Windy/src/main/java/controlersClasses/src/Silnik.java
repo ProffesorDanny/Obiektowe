@@ -5,7 +5,7 @@ public class Silnik extends Urzadzenie {
     private double obroty_obc;
 
     public double poruszaj(boolean kierunek, int aktualna_waga) throws  Exception{
-        if(this.getObciazenie_max()>this.getObciazenie())
+        if(this.getObciazenie_max()<this.getObciazenie())
         {
             throw new Exception();
         }

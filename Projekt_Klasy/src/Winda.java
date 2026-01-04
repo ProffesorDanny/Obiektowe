@@ -119,6 +119,7 @@ public class Winda extends Urzadzenie implements Runnable, Listener {
     public Winda(int waga_pod, int obciazenie_max, String nazwa, Silnik silnik) {
         super(waga_pod, obciazenie_max, nazwa);
         this.silnik = silnik;
+
         this.id = ++freeId;
     }
 

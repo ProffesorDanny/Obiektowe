@@ -1,16 +1,33 @@
 package controlersClasses.src;
 
-public class Pietro extends Urzadzenie implements Informer, Runnable {
-    private boolean oczekiwanie;
+import java.util.ArrayList;
+
+public class Pietro extends Urzadzenie implements Runnable {
+    private boolean[] oczekiwanie;
     private int towar;
     private int numer;
+    private ArrayList<Listener> windy = new ArrayList<>();
 
-    public boolean getOczekiwanie() {
-        return oczekiwanie;
+    public void addListener(Listener l) {
+        windy.add(l);
     }
 
-    public void setOczekiwanie(boolean oczekiwanie) {
-        this.oczekiwanie = oczekiwanie;
+    public boolean getOczekiwanie(boolean kierunek) {
+        if (kierunek) {
+            return this.oczekiwanie[1];
+        }
+        else  {
+            return this.oczekiwanie[0];
+        }
+    }
+
+    public void setOczekiwanie(boolean oczekiwanie, boolean kierunek) {
+        if (kierunek) {
+            this.oczekiwanie[1] = oczekiwanie;
+        }
+        else {
+            this.oczekiwanie[0] = oczekiwanie;
+        }
     }
 
     public void ZmianaTowaru(int zmiana) {
@@ -23,17 +40,22 @@ public class Pietro extends Urzadzenie implements Informer, Runnable {
         return przeniesiony;
     }
 
-    public void PrzywolajWindę(boolean kierunek) {
-        if (kierunek) {
-            this.setOczekiwanie(true);
+    public void PrzywolajWinde(boolean kierunek) {
+        if (kierunek && !this.oczekiwanie[1]) {
+            setOczekiwanie(true , true);
+            for (Listener l : windy) {
+                l.action(1,this.numer);
+            }
         }
-        else  {
-            this.setOczekiwanie(true);
+        else if (!kierunek && !this.oczekiwanie[0]) {
+            setOczekiwanie(true , false);
+            for (Listener l : windy) {
+                l.action(-1,this.numer);
+            }
         }
 
 
     }
-    @Override
     public void inform()
     {
 
@@ -41,7 +63,7 @@ public class Pietro extends Urzadzenie implements Informer, Runnable {
 
     public Pietro(String nazwa, int numer) {
         super(nazwa);
-        this.oczekiwanie = false;
+        this.oczekiwanie = new boolean[]{false, false};
         this.numer = numer;
     }
     @Override

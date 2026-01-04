@@ -13,8 +13,8 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
     private Silnik silnik;
     private byte kierunek;
     private int id;
-    private List<Informer> pietra = new ArrayList<>();
     private List<Boolean> zadania = new ArrayList<>();
+    private List<Listener> kontrolery = new ArrayList<>();
 
     public double getWyskosc() {
         return wyskosc;
@@ -29,11 +29,11 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
         } catch (Exception e) {
             throw new Exception();
         }
-        if (predkosc > 0 && wyskosc + predkosc * odstep > destynacja) {
+        if (predkosc > 0 && wyskosc + predkosc * odstep < destynacja) {
             wyskosc += predkosc * odstep;
             this.kierunek = 1;
         }
-        else if (predkosc < 0 && wyskosc + predkosc * odstep < destynacja) {
+        else if (predkosc < 0 && wyskosc + predkosc * odstep > destynacja) {
             wyskosc += predkosc * odstep;
             this.kierunek = -1;
         }
@@ -54,21 +54,23 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
     }
 
     public void action(Object... args) {
-        this.elekcja((int)args[0],(byte)args[1]);
+        int pietro = ((Number) args[1]).intValue();
+        byte kierunek = ((Number) args[0]).byteValue();
+        this.elekcja(pietro,kierunek);
     }
 
     public synchronized void elekcja(int pietro, byte kierunek) {
         double odleglosc;
-        if (this.kierunek*(wyskosc/5-pietro)>0 && kierunek == this.kierunek ) {
-            odleglosc = kierunek*(wyskosc/5-pietro);
-            if (odleglosc < przyjeteZadaniaOd.get(pietro)) {
+        if (this.kierunek*(pietro-wyskosc/5)>=0 && (kierunek == this.kierunek || this.kierunek == 0)) {
+            odleglosc = kierunek*(pietro-wyskosc/5);
+            if (odleglosc < przyjeteZadaniaOd.get(pietro) || przyjeteZadaniaWindy.get(pietro)==-1) {
                 przyjeteZadaniaOd.set(pietro,odleglosc);
                 przyjeteZadaniaWindy.set(pietro,this.id);
             }
         }
     }
 
-    public void refreshOwnTasks() {
+    public synchronized void refreshOwnTasks() {
         for (int i = 0; i < przyjeteZadaniaWindy.size(); i++) {
             if (przyjeteZadaniaWindy.get(i) == this.id) {
                 this.zadania.set(i, true);
@@ -79,6 +81,13 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
         }
     }
 
+    public void addListener(Listener l) {
+        kontrolery.add(l);
+    }
+    public void removeListener(Listener l) {
+        kontrolery.remove(l);
+    }
+
 
     public void run() {
         while (true) {
@@ -87,7 +96,7 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
             } catch (InterruptedException e) {}
             this.refreshOwnTasks();
             boolean isQuestSelected = false;
-            for (int i = (int)(wyskosc/5) ;i < this.zadania.size() && i>0; i += kierunek) {
+            for (int i = (int)(wyskosc/5) ;i < this.zadania.size() && i>=0; i += kierunek) {
                 if (zadania.get(i)) {
                     try {
                         isQuestSelected = true;
@@ -99,7 +108,7 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
                 }
             }
             if (!isQuestSelected) {
-                for (int i = (int)(wyskosc/5) ;i < this.zadania.size() && i>0; i -= kierunek) {
+                for (int i = (int)(wyskosc/5) ;i < this.zadania.size() && i>=0; i -= kierunek) {
                     if (zadania.get(i)) {
                         try {
                             isQuestSelected = true;
@@ -111,11 +120,15 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
                     }
                 }
             }
-            if (kierunek%5==0)
-            {
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {}
+           // if (kierunek%5==0)
+           // {
+              //  try {
+              //      Thread.sleep(10000);
+              //  } catch (InterruptedException e) {}
+
+           // }
+            for (Listener k : kontrolery) {
+                k.action();
             }
 
         }
@@ -125,7 +138,19 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
     public Winda(int waga_pod, int obciazenie_max, String nazwa, Silnik silnik) {
         super(waga_pod, obciazenie_max, nazwa);
         this.silnik = silnik;
+        if(freeId == 0)
+        {
+            for (int i = 0; i < 4; i++) {
+                Winda.przyjeteZadaniaOd.add(0d);
+                Winda.przyjeteZadaniaWindy.add(-1);
+            }
+        }
         this.id = ++freeId;
+        this.wyskosc = 0;
+        this.kierunek = 1;
+        for (int i = 0; i < 4; i++) {
+            this.zadania.add(false);
+        }
     }
 
 }
