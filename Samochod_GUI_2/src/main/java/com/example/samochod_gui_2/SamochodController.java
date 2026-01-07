@@ -37,10 +37,14 @@ public class SamochodController implements Listener {
     );
 
 
-    public void addCarToList(String model, String id, int waga, int maxspeed){
-        Samochod sam = new Samochod(waga,model,defaultPos,engine1,b1,id);
+    public void addCarToList(String model, String id, int waga, int maxspeed, Silnik silnik, SkrzyniaBiegow skr) {
+        Pozycja pozycja = new Pozycja(defaultPos.getX(),defaultPos.getY());
+        Samochod sam = new Samochod(waga,model,pozycja,silnik,skr,id);
         choiceCarBox.getItems().add(sam);
         choiceCarBox.getSelectionModel().selectFirst();
+        Thread sam_t = new Thread(sam);
+        sam_t.start();
+        refresh();
     }
     public TextField SpeedTextBox;
     public TextField MassTextBox;
@@ -65,10 +69,12 @@ public class SamochodController implements Listener {
     public void onEngineStartClick(ActionEvent actionEvent) {
 
         currentsam.wlacz();
+        refresh();
     }
 
     public void onEngineStopButtonClick(ActionEvent actionEvent) {
         currentsam.wylacz();
+        refresh();
     }
 
     public void onIncreaseSpeedButtonClick(ActionEvent actionEvent) {
@@ -76,15 +82,18 @@ public class SamochodController implements Listener {
             currentsam.DodajGazu();
             SpeedTextBox.setText(String.valueOf(currentsam.getAktpredkosc()));
         }
+        refresh();
 
     }
 
     public void onClatchUpClick(ActionEvent actionEvent) {
         currentsam.getSkrzyniaBiegow().getSprzeglo().wcisnij();
+        refresh();
     }
 
     public void onClutchDownClick(ActionEvent actionEvent) {
         currentsam.getSkrzyniaBiegow().getSprzeglo().zwolnj();
+        refresh();
 
     }
 
@@ -121,6 +130,9 @@ public class SamochodController implements Listener {
         runsPriceTextField.setText(String.valueOf(currentsam.getSkrzyniaBiegow().getCena()));
         runsRunTextField.setText(String.valueOf(currentsam.getSkrzyniaBiegow().getAktualnyBieg()));
         SpeedTextBox.setText(String.valueOf(currentsam.getAktpredkosc()));
+        ModelTextBox.setText(currentsam.getModel());
+        MassTextBox.setText(String.valueOf(currentsam.getWaga()));
+        SerialNumberTextBox.setText(currentsam.getNrRejestru());
         Platform.runLater(()->{
             carImageView.setTranslateX(currentsam.getPozycja().getX());
             carImageView.setTranslateY(currentsam.getPozycja().getY());
@@ -141,6 +153,7 @@ public class SamochodController implements Listener {
             double y = event.getY();
             Pozycja nowaPozycja = new Pozycja(x, y);
             currentsam.jedzDo(nowaPozycja);
+            refresh();
         });
         choiceCarBox.setItems(cars);
         choiceCarBox.setOnAction(event -> {
@@ -151,10 +164,12 @@ public class SamochodController implements Listener {
 
     public void onDecreaseRunClick(ActionEvent actionEvent) {
         currentsam.getSkrzyniaBiegow().zmniejszBieg();
+        refresh();
     }
 
     public void onIncreaseRunClick(ActionEvent actionEvent) {
         currentsam.getSkrzyniaBiegow().zwiekrzBieg();
+        refresh();
     }
 
     public void onDecreaseSpeedButtonClick(ActionEvent actionEvent) {
@@ -162,6 +177,7 @@ public class SamochodController implements Listener {
             currentsam.UpuscGazu();
             SpeedTextBox.setText(String.valueOf(currentsam.getAktpredkosc()));
         }
+        refresh();
 
     }
 

@@ -39,6 +39,12 @@ public class SkrzyniaBiegow extends Komponent
         this.cena = cena;
         this.nazwa = nazwa;
         this.sprzeglo = sprzeglo;
+        this.aktualnyBieg = 1;
+    }
+
+    @Override
+    public String toString() {
+        return this.nazwa;
     }
 
 }

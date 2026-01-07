@@ -1,5 +1,8 @@
 package com.example.samochod_gui_2;
 
+import controlersClasses.src.Silnik;
+import controlersClasses.src.SkrzyniaBiegow;
+import controlersClasses.src.Sprzeglo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,9 +24,23 @@ public class DodajSamochodController {
     @FXML
     private TextField maxSpeed;
     @FXML
-    private ComboBox engineChoice;
+    private ComboBox<Silnik> engineChoice;
     @FXML
-    private ComboBox runsChoice;
+    private ComboBox<SkrzyniaBiegow> runsChoice;
+
+    public void initialize()
+    {
+        Sprzeglo s1 = new Sprzeglo(200,50,"s1");
+        Sprzeglo s2 = new Sprzeglo(2000,80,"s2");
+        SkrzyniaBiegow b1 = new SkrzyniaBiegow(5,210,800,"b1",s1);
+        SkrzyniaBiegow b2 = new SkrzyniaBiegow(6,240,1200,"b2",s2);
+        Silnik si1 = new Silnik(400,2000,"si1",1000);
+        Silnik si2 = new Silnik(500,5000,"si2",2000);
+        engineChoice.getItems().add(si1);
+        engineChoice.getItems().add(si2);
+        runsChoice.getItems().add(b1);
+        runsChoice.getItems().add(b2);
+    }
 
     public void setMainController(SamochodController controller) {
 
@@ -35,6 +52,8 @@ public class DodajSamochodController {
         String registrationNumber = this.idNumber.getText();
         int weight;
         int maxSpeed;
+        Silnik silnik = this.engineChoice.getValue();
+        SkrzyniaBiegow skr = this.runsChoice.getValue();
         try {
             weight = Integer.parseInt(this.weight.getText());
             maxSpeed = Integer.parseInt(this.maxSpeed.getText());
@@ -44,7 +63,7 @@ public class DodajSamochodController {
             return;
         }
 
-        mainController.addCarToList(model,registrationNumber,weight,maxSpeed);
+        mainController.addCarToList(model,registrationNumber,weight,maxSpeed,silnik,skr);
         Stage stage = (Stage) commitButton.getScene().getWindow();
         stage.close();
     }
@@ -53,4 +72,5 @@ public class DodajSamochodController {
         Stage stage = (Stage) commitButton.getScene().getWindow();
         stage.close();
     }
+
 }

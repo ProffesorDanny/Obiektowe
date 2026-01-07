@@ -25,50 +25,6 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </MenuBar>
-      <Accordion layoutY="23.0" prefHeight="152.0" prefWidth="234.0">
-        <panes>
-          <TitledPane fx:id="CarBox" animated="false" prefHeight="199.0" prefWidth="234.0" text="Samochód">
-               <content>
-                  <AnchorPane fx:id="CarPane" prefHeight="357.0" prefWidth="233.0">
-                     <children>
-                        <Label layoutX="14.0" layoutY="1.0" prefHeight="26.0" prefWidth="49.0" text="Model" />
-                        <TextField fx:id="ModelTextBox" editable="false" layoutX="67.0" layoutY="1.0" prefHeight="26.0" prefWidth="144.0" />
-                        <Label layoutX="14.0" layoutY="34.0" text="nr. Rejestracyjny" />
-                        <TextField fx:id="SerialNumberTextBox" editable="false" layoutX="114.0" layoutY="30.0" prefHeight="26.0" prefWidth="97.0" />
-                        <Label layoutX="14.0" layoutY="63.0" text="Waga" />
-                        <TextField fx:id="MassTextBox" layoutX="74.0" layoutY="59.0" prefHeight="26.0" prefWidth="138.0" />
-                        <Label layoutX="15.0" layoutY="94.0" text="Prędkość" />
-                        <TextField fx:id="SpeedTextBox" layoutX="78.0" layoutY="89.0" prefHeight="26.0" prefWidth="136.0" />
-                        <Button fx:id="startEngine" layoutX="31.0" layoutY="129.0" mnemonicParsing="false" onAction="#onEngineStartClick" text="Włącz" />
-                        <Button fx:id="EngineStopButton" layoutX="92.0" layoutY="129.0" mnemonicParsing="false" onAction="#onEngineStopButtonClick" text="Wyłącz" />
-                        <Button layoutX="153.0" layoutY="129.0" mnemonicParsing="false" text="Button" />
-                     </children>
-                  </AnchorPane>
-               </content>
-          </TitledPane>
-        </panes>
-      </Accordion>
-      <Accordion layoutY="225.0" prefHeight="202.0" prefWidth="238.0">
-        <panes>
-          <TitledPane animated="false" prefHeight="154.0" prefWidth="238.0" text="Skrzynia Biegów">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="186.0" prefWidth="237.0">
-                     <children>
-                        <Label layoutX="14.0" layoutY="15.0" text="Nazwa" />
-                        <TextField fx:id="runsNameTextField" layoutX="66.0" layoutY="11.0" />
-                        <TextField fx:id="runsPriceTextField" layoutX="52.0" layoutY="43.0" prefHeight="26.0" prefWidth="165.0" />
-                        <TextField fx:id="runsMassTextField" layoutX="52.0" layoutY="75.0" prefHeight="26.0" prefWidth="165.0" />
-                        <TextField fx:id="runsRunTextField" layoutX="52.0" layoutY="108.0" prefHeight="26.0" prefWidth="164.0" />
-                        <Button fx:id="increseRun" layoutX="32.0" layoutY="143.0" mnemonicParsing="false" onAction="#onIncreaseRunClick" prefHeight="26.0" prefWidth="90.0" text="Zmniejsz bieg" />
-                        <Button fx:id="decreaseRun" layoutX="134.0" layoutY="143.0" mnemonicParsing="false" onAction="#onDecreaseRunClick" prefHeight="26.0" prefWidth="84.0" text="Zwiększ bieg" />
-                        <Label layoutX="14.0" layoutY="47.0" text="Cena" />
-                        <Label layoutX="14.0" layoutY="79.0" text="Waga" />
-                        <Label layoutX="16.0" layoutY="112.0" text="Bieg" />
-                     </children></AnchorPane>
-            </content>
-          </TitledPane>
-        </panes>
-      </Accordion>
     <TitledPane animated="false" layoutY="427.0" prefHeight="207.0" prefWidth="236.0" text="Silnik">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="186.0" prefWidth="234.0">
@@ -117,5 +73,42 @@
             <Image url="@SAM.png" />
          </image></ImageView>
       <VBox fx:id="mapa" layoutX="238.0" layoutY="53.0" prefHeight="786.0" prefWidth="1154.0" />
+    <TitledPane animated="false" layoutY="228.0" prefHeight="202.0" prefWidth="238.0" text="Skrzynia Biegów">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="186.0" prefWidth="237.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="15.0" text="Nazwa" />
+                  <TextField fx:id="runsNameTextField" layoutX="66.0" layoutY="11.0" />
+                  <TextField fx:id="runsPriceTextField" layoutX="52.0" layoutY="43.0" prefHeight="26.0" prefWidth="165.0" />
+                  <TextField fx:id="runsMassTextField" layoutX="52.0" layoutY="75.0" prefHeight="26.0" prefWidth="165.0" />
+                  <TextField fx:id="runsRunTextField" layoutX="52.0" layoutY="108.0" prefHeight="26.0" prefWidth="164.0" />
+                  <Button fx:id="decreaseRun" layoutX="32.0" layoutY="143.0" mnemonicParsing="false" onAction="#onDecreaseRunClick" prefHeight="26.0" prefWidth="90.0" text="Zmniejsz bieg" />
+                  <Button fx:id="increaseRun" layoutX="134.0" layoutY="143.0" mnemonicParsing="false" onAction="#onIncreaseRunClick" prefHeight="26.0" prefWidth="84.0" text="Zwiększ bieg" />
+                  <Label layoutX="14.0" layoutY="47.0" text="Cena" />
+                  <Label layoutX="14.0" layoutY="79.0" text="Waga" />
+                  <Label layoutX="16.0" layoutY="112.0" text="Bieg" />
+               </children>
+            </AnchorPane>
+      </content>
+    </TitledPane>
+    <TitledPane fx:id="CarBox" animated="false" layoutX="1.0" layoutY="26.0" prefHeight="199.0" prefWidth="234.0" text="Samochód">
+         <content>
+            <AnchorPane fx:id="CarPane" prefHeight="160.0" prefWidth="234.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="1.0" prefHeight="26.0" prefWidth="49.0" text="Model" />
+                  <TextField fx:id="ModelTextBox" editable="false" layoutX="67.0" layoutY="1.0" prefHeight="26.0" prefWidth="144.0" />
+                  <Label layoutX="14.0" layoutY="34.0" text="nr. Rejestracyjny" />
+                  <TextField fx:id="SerialNumberTextBox" editable="false" layoutX="114.0" layoutY="30.0" prefHeight="26.0" prefWidth="97.0" />
+                  <Label layoutX="14.0" layoutY="63.0" text="Waga" />
+                  <TextField fx:id="MassTextBox" layoutX="74.0" layoutY="59.0" prefHeight="26.0" prefWidth="138.0" />
+                  <Label layoutX="15.0" layoutY="94.0" text="Prędkość" />
+                  <TextField fx:id="SpeedTextBox" layoutX="78.0" layoutY="89.0" prefHeight="26.0" prefWidth="136.0" />
+                  <Button fx:id="startEngine" layoutX="31.0" layoutY="129.0" mnemonicParsing="false" onAction="#onEngineStartClick" text="Włącz" />
+                  <Button fx:id="EngineStopButton" layoutX="92.0" layoutY="129.0" mnemonicParsing="false" onAction="#onEngineStopButtonClick" text="Wyłącz" />
+                  <Button layoutX="153.0" layoutY="129.0" mnemonicParsing="false" text="Button" />
+               </children>
+            </AnchorPane>
+         </content>
+    </TitledPane>
    </children>
 </AnchorPane>

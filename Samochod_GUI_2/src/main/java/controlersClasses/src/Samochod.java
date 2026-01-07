@@ -27,7 +27,7 @@ public class Samochod extends Thread {
     }
 
     public int getAktpredkosc() {
-        return silnik.getObroty() * skrzyniaBiegow.getAktualnePrzelorzenie();
+        return silnik.getObroty() * skrzyniaBiegow.getAktualnyBieg();
     }
 
     public Pozycja getPozycja() {
@@ -40,6 +40,20 @@ public class Samochod extends Thread {
 
     public SkrzyniaBiegow getSkrzyniaBiegow() {
         return skrzyniaBiegow;
+    }
+
+    public String getNrRejestru() {
+        return nrRejestru;
+    }
+    public String getModel() {
+        return model;
+    }
+    public int getPredkoscMax() {
+        return predkoscMax;
+    }
+
+    public int getWaga() {
+        return waga;
     }
 
     public void DodajGazu() {
@@ -83,18 +97,24 @@ public class Samochod extends Thread {
     }
 
     public void jedzDo(Pozycja pozycja) {
-        while (true) {
+
             if (pozycja != null)
             {
                 this.pozycja.Przemiesc(pozycja, this.silnik.getObroty() * this.skrzyniaBiegow.getAktualnyBieg(), 0.1);
             }
-        }
+
 
     }
 
-    @Override
-    public void run() {
-        this.jedzDo(this.pozycja);
-    }
+   // @Override
+    //public void run() {
+      //  while(true) {
+        //    this.jedzDo(this.pozycja);
+          //  try {
+          //      Thread.sleep(500);
+          //  } catch (InterruptedException e) {}
+
+       // }
+  //  }
 
 }

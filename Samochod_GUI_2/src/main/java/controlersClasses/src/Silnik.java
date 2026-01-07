@@ -60,4 +60,9 @@ public class Silnik extends Komponent {
         this.obroty = 0;
     }
 
+    @Override
+    public String toString() {
+        return this.nazwa;
+    }
+
 }
