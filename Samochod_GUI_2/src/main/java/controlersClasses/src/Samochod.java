@@ -27,7 +27,7 @@ public class Samochod extends Thread {
     }
 
     public int getAktpredkosc() {
-        return silnik.getObroty() * skrzyniaBiegow.getAktualnyBieg();
+        return (int)(silnik.getObroty() * skrzyniaBiegow.getAktualnePrzelorzenie());
     }
 
     public Pozycja getPozycja() {
@@ -100,7 +100,7 @@ public class Samochod extends Thread {
 
             if (pozycja != null)
             {
-                this.pozycja.Przemiesc(pozycja, this.silnik.getObroty() * this.skrzyniaBiegow.getAktualnyBieg(), 0.1);
+                this.pozycja.Przemiesc(pozycja, this.silnik.getObroty() * this.skrzyniaBiegow.getAktualnePrzelorzenie(), 0.1);
             }
 
 

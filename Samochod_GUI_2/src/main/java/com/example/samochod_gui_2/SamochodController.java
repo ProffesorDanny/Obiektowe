@@ -26,10 +26,7 @@ public class SamochodController implements Listener {
         static Pozycja defaultPos = new Pozycja(0,0);
         static Silnik engine1 = new Silnik(100,200,"W40",7000);
         static Sprzeglo s1 = new Sprzeglo(10,3,"ZS1");
-        static SkrzyniaBiegow b1 = new SkrzyniaBiegow(5,20,200,"ZSB12",s1);
-    static{
-        currentsam = new Samochod(1200,"BMW67",defaultPos,engine1,b1,"15001900");
-    }
+
 
     public ComboBox<Samochod> choiceCarBox;
     public VBox mapa;

@@ -4,7 +4,7 @@ public class SkrzyniaBiegow extends Komponent
 {
     private int aktualnyBieg;
     private int iloscBiegow;
-    private int aktualnePrzelorzenie;
+    private double aktualnePrzelorzenie;
     private Sprzeglo sprzeglo;
 
     public void zwiekrzBieg() {
@@ -24,7 +24,7 @@ public class SkrzyniaBiegow extends Komponent
     public int getAktualnyBieg() {
         return aktualnyBieg;
     }
-    public int getAktualnePrzelorzenie() {
+    public double getAktualnePrzelorzenie() {
         return aktualnePrzelorzenie;
     }
     public int getIloscBiegow() {
@@ -32,7 +32,7 @@ public class SkrzyniaBiegow extends Komponent
     }
     public Sprzeglo getSprzeglo() {return sprzeglo;}
 
-    public SkrzyniaBiegow(int iloscBiegow, int waga, int cena, String nazwa, Sprzeglo sprzeglo)
+    public SkrzyniaBiegow(int iloscBiegow, int waga, int cena, String nazwa, double pods_przelozenie, Sprzeglo sprzeglo)
     {
         this.iloscBiegow = iloscBiegow;
         this.waga = waga;
@@ -40,6 +40,7 @@ public class SkrzyniaBiegow extends Komponent
         this.nazwa = nazwa;
         this.sprzeglo = sprzeglo;
         this.aktualnyBieg = 1;
+        this.aktualnePrzelorzenie = pods_przelozenie;
     }
 
     @Override

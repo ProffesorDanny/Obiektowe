@@ -39,10 +39,15 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
         }
         else {
             wyskosc = destynacja;
-            this.zatrzymaj();
-            silnik.zatrzymaj();
+            //this.zatrzymaj();
+            //silnik.zatrzymaj();
+            this.PodfierdzWykonanie();
         }
 
+    }
+    public synchronized void PodfierdzWykonanie() {
+        przyjeteZadaniaWindy.set((int)(wyskosc/5),-1);
+        przyjeteZadaniaOd.set((int)(wyskosc/5),0d);
     }
     public void zatrzymaj()
     {
@@ -67,6 +72,19 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
                 przyjeteZadaniaOd.set(pietro,odleglosc);
                 przyjeteZadaniaWindy.set(pietro,this.id);
             }
+        }
+        else {
+            odleglosc = 99;
+            if (odleglosc < przyjeteZadaniaOd.get(pietro) || przyjeteZadaniaWindy.get(pietro)==-1) {
+                przyjeteZadaniaOd.set(pietro,odleglosc);
+                przyjeteZadaniaWindy.set(pietro,this.id);
+            }
+        }
+    }
+    public synchronized void reElekcja(int pietro, byte kierunek)
+    {
+        for (int i = 0; i < przyjeteZadaniaWindy.size(); i++) {
+            elekcja(i,this.kierunek); //problem braku zajomości kierunku przywołania, do rozwiązania w przyszłości
         }
     }
 
@@ -112,7 +130,8 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
                     if (zadania.get(i)) {
                         try {
                             isQuestSelected = true;
-                            jedz((-kierunek > 0), i * 5, 0.1);
+                            kierunek = (byte)(-kierunek);
+                            jedz((kierunek > 0), i * 5, 0.1);
                         }
                         catch (Exception e) {
                             predkosc = 0;
@@ -120,6 +139,7 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
                     }
                 }
             }
+
            // if (kierunek%5==0)
            // {
               //  try {

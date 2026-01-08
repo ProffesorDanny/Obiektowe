@@ -32,8 +32,8 @@ public class DodajSamochodController {
     {
         Sprzeglo s1 = new Sprzeglo(200,50,"s1");
         Sprzeglo s2 = new Sprzeglo(2000,80,"s2");
-        SkrzyniaBiegow b1 = new SkrzyniaBiegow(5,210,800,"b1",s1);
-        SkrzyniaBiegow b2 = new SkrzyniaBiegow(6,240,1200,"b2",s2);
+        SkrzyniaBiegow b1 = new SkrzyniaBiegow(5,210,800,"b1",0.044,s1);
+        SkrzyniaBiegow b2 = new SkrzyniaBiegow(6,240,1200,"b2",0.033,s2);
         Silnik si1 = new Silnik(400,2000,"si1",1000);
         Silnik si2 = new Silnik(500,5000,"si2",2000);
         engineChoice.getItems().add(si1);
