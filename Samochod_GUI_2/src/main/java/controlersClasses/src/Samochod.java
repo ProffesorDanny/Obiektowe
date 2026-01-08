@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Samochod extends Thread {
+    private Pozycja aktualykurs;
     private List<Listener> listeners = new ArrayList<>();
     private boolean stanWlacznia;
     private String nrRejestru;
@@ -20,6 +21,10 @@ public class Samochod extends Thread {
 
     public void wylacz() {
         stanWlacznia = silnik.zatrzymaj(stanWlacznia);
+    }
+
+    public synchronized void setAktualykurs(Pozycja aktualykurs) {
+        this.aktualykurs = aktualykurs;
     }
 
     public boolean getStanWlacznia() {
@@ -106,15 +111,17 @@ public class Samochod extends Thread {
 
     }
 
-   // @Override
-    //public void run() {
-      //  while(true) {
-        //    this.jedzDo(this.pozycja);
-          //  try {
-          //      Thread.sleep(500);
-          //  } catch (InterruptedException e) {}
+    @Override
+    public void run() {
+        while(true) {
+            this.jedzDo(this.aktualykurs);
+            notifyListeners();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {}
 
-       // }
-  //  }
+
+        }
+    }
 
 }

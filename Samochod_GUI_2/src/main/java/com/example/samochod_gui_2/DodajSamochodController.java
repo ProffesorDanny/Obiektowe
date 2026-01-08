@@ -49,7 +49,7 @@ public class DodajSamochodController {
 
     public void onCommitButtonClick(ActionEvent actionEvent) {
         String model = this.model.getText();
-        String registrationNumber = this.idNumber.getText();
+        String registrationNumber = this.idNumber.getText().toUpperCase();
         int weight;
         int maxSpeed;
         Silnik silnik = this.engineChoice.getValue();
@@ -62,8 +62,13 @@ public class DodajSamochodController {
             System.out.println("Nieprawidłowe dane.");
             return;
         }
-
-        mainController.addCarToList(model,registrationNumber,weight,maxSpeed,silnik,skr);
+        try {
+            mainController.addCarToList(model,registrationNumber,weight,maxSpeed,silnik,skr);
+        }
+        catch (NullPointerException e) {
+            System.out.println("Nieprawidłowe dane.");
+            return;
+        }
         Stage stage = (Stage) commitButton.getScene().getWindow();
         stage.close();
     }

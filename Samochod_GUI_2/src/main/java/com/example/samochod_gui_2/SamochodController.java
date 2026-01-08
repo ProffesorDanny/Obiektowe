@@ -37,6 +37,7 @@ public class SamochodController implements Listener {
     public void addCarToList(String model, String id, int waga, int maxspeed, Silnik silnik, SkrzyniaBiegow skr) {
         Pozycja pozycja = new Pozycja(defaultPos.getX(),defaultPos.getY());
         Samochod sam = new Samochod(waga,model,pozycja,silnik,skr,id);
+        sam.addListener(this);
         choiceCarBox.getItems().add(sam);
         choiceCarBox.getSelectionModel().selectFirst();
         Thread sam_t = new Thread(sam);
@@ -149,7 +150,7 @@ public class SamochodController implements Listener {
             double x = event.getX();
             double y = event.getY();
             Pozycja nowaPozycja = new Pozycja(x, y);
-            currentsam.jedzDo(nowaPozycja);
+            currentsam.setAktualykurs(nowaPozycja);
             refresh();
         });
         choiceCarBox.setItems(cars);
