@@ -57,6 +57,9 @@ public class DodajSamochodController {
         try {
             weight = Integer.parseInt(this.weight.getText());
             maxSpeed = Integer.parseInt(this.maxSpeed.getText());
+            if (model.isEmpty() || registrationNumber.isEmpty() || weight <= 0 || maxSpeed <= 0) {
+                throw new NumberFormatException();
+            }
         }
         catch (NumberFormatException e) {
             System.out.println("Nieprawidłowe dane.");
