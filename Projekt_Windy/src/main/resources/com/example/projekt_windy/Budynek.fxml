@@ -41,7 +41,7 @@
                                                         <items>
                                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                                <children>
-                                                                  <Button layoutX="10.0" layoutY="14.0" mnemonicParsing="false" text="W1" />
+                                                                  <Button fx:id="firstElevatorMenu" layoutX="10.0" layoutY="14.0" mnemonicParsing="false" onAction="#onFirstElevatorMenuClick" text="W1" />
                                                                </children>
                                                             </AnchorPane>
                                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="99.0" prefWidth="94.0">

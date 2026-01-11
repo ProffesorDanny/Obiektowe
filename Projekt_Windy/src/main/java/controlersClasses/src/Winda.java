@@ -14,6 +14,7 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
     private byte kierunek;
     private int id;
     private List<Boolean> zadania = new ArrayList<>();
+    private List<Boolean> cele = new ArrayList();
     private List<Listener> kontrolery = new ArrayList<>();
 
     public double getWyskosc() {
@@ -42,6 +43,7 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
             //this.zatrzymaj();
             //silnik.zatrzymaj();
             this.PodfierdzWykonanie();
+            this.setNewTarget((int)(this.wyskosc/5),false);
         }
 
     }
@@ -66,31 +68,35 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
 
     public synchronized void elekcja(int pietro, byte kierunek) {
         double odleglosc;
-        if (this.kierunek*(pietro-wyskosc/5)>=0 && (kierunek == this.kierunek || this.kierunek == 0)) {
-            odleglosc = kierunek*(pietro-wyskosc/5);
-            if (odleglosc < przyjeteZadaniaOd.get(pietro) || przyjeteZadaniaWindy.get(pietro)==-1) {
-                przyjeteZadaniaOd.set(pietro,odleglosc);
-                przyjeteZadaniaWindy.set(pietro,this.id);
+        if (cele.get(pietro)) {
+            if (this.kierunek * (pietro - wyskosc / 5) >= 0) {
+                odleglosc = 0;
             }
+            else {
+                odleglosc = (double) this.cele.size() /1.5;
+            }
+        }
+        else if (this.kierunek*(pietro-wyskosc/5)>=0 && (kierunek == this.kierunek || this.kierunek == 0)) {
+            odleglosc = kierunek*(pietro-wyskosc/5);
         }
         else {
             odleglosc = 99;
-            if (odleglosc < przyjeteZadaniaOd.get(pietro) || przyjeteZadaniaWindy.get(pietro)==-1) {
-                przyjeteZadaniaOd.set(pietro,odleglosc);
-                przyjeteZadaniaWindy.set(pietro,this.id);
-            }
+        }
+        if (odleglosc < przyjeteZadaniaOd.get(pietro) || przyjeteZadaniaWindy.get(pietro)==-1) {
+            przyjeteZadaniaOd.set(pietro,odleglosc);
+            przyjeteZadaniaWindy.set(pietro,this.id);
         }
     }
     public synchronized void reElekcja(int pietro, byte kierunek)
     {
         for (int i = 0; i < przyjeteZadaniaWindy.size(); i++) {
-            elekcja(i,this.kierunek); //problem braku zajomości kierunku przywołania, do rozwiązania w przyszłości
+            elekcja(i,kierunek); //problem braku zajomości kierunku przywołania, do rozwiązania w przyszłości
         }
     }
 
     public synchronized void refreshOwnTasks() {
         for (int i = 0; i < przyjeteZadaniaWindy.size(); i++) {
-            if (przyjeteZadaniaWindy.get(i) == this.id) {
+            if (przyjeteZadaniaWindy.get(i) == this.id || cele.get(i)) {
                 this.zadania.set(i, true);
             }
             else  {
@@ -104,6 +110,11 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
     }
     public void removeListener(Listener l) {
         kontrolery.remove(l);
+    }
+
+    public void setNewTarget(int pietro, boolean typ)
+    {
+        this.cele.set(pietro,typ);
     }
 
 
@@ -126,11 +137,14 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
                 }
             }
             if (!isQuestSelected) {
+                for (int i = 0; i < this.zadania.size(); i++) {
+                    reElekcja(i,(byte)-this.kierunek);
+                }
                 for (int i = (int)(wyskosc/5) ;i < this.zadania.size() && i>=0; i -= kierunek) {
                     if (zadania.get(i)) {
                         try {
                             isQuestSelected = true;
-                            kierunek = (byte)(-kierunek);
+                            kierunek = (byte) (-kierunek);
                             jedz((kierunek > 0), i * 5, 0.1);
                         }
                         catch (Exception e) {
@@ -170,6 +184,9 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
         this.kierunek = 1;
         for (int i = 0; i < 4; i++) {
             this.zadania.add(false);
+        }
+        for (int i = 0; i < 4; i++) {
+            this.cele.add(false);
         }
     }
 

@@ -135,6 +135,26 @@ public class SamochodController implements Listener {
             carImageView.setTranslateX(currentsam.getPozycja().getX());
             carImageView.setTranslateY(currentsam.getPozycja().getY());
         });
+
+    }
+    public void reset()
+    {
+        clutchMassTextField.setText("");
+        clutchNameTextField.setText("");
+        clutchPriceTextField.setText("");
+        engineMassTextField.setText("");
+        enginePriceTextField.setText("");
+        engineNameTextField.setText("");
+        RadialSpeedBox.setText("");
+        runsMassTextField.setText("");
+        runsNameTextField.setText("");
+        runsPriceTextField.setText("");
+        runsRunTextField.setText("");
+        SpeedTextBox.setText("");
+        ModelTextBox.setText("");
+        MassTextBox.setText("");
+        SerialNumberTextBox.setText("");
+        clutchStateTextField.setText("");
     }
     public void initialize() {
         System.out.println("HelloController initialized");
@@ -183,6 +203,10 @@ public class SamochodController implements Listener {
     public void onWipeCarClick(ActionEvent actionEvent) {
         cars.remove(currentsam);
         choiceCarBox.getSelectionModel().selectFirst();
+        if (currentsam == null)
+        {
+            reset();
+        }
     }
     public void pokazBlad(String wiadomosc)
     {

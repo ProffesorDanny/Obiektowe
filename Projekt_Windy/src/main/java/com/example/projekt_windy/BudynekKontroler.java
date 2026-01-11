@@ -4,17 +4,21 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import controlersClasses.src.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.awt.event.WindowAdapter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class BudynekKontroler implements Listener {
     public ImageView elevatorOne;
-    Silnik silnik;
-    Winda winda1;
+    private Silnik silnik;
+    private Winda winda1;
     ArrayList<Pietro> pietra = new ArrayList<>();
     public void initialize() {
         silnik = new Silnik(80,1000,"Silneks",10);
@@ -34,8 +38,6 @@ public class BudynekKontroler implements Listener {
             elevatorOne.setTranslateY(winda1.getWyskosc()*(-50));
         });
     }
-
-
 
     public void onThirdFloorUpButtonClick(ActionEvent actionEvent) {
         pietra.get(3).PrzywolajWinde(true);
@@ -69,5 +71,18 @@ public class BudynekKontroler implements Listener {
 
     public void onParterUpButtonClick(ActionEvent actionEvent) {
         pietra.get(0).PrzywolajWinde(true);
+    }
+
+    public void onFirstElevatorMenuClick(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DodajSamochod.fxml"));
+        Stage stage = new Stage();
+        Parent root = loader.load();
+        MenuWindyKontroler secondController = loader.getController();
+        secondController.setMainController(this);
+        secondController.setPrzypisanaWinda(winda1);
+
+        stage.setScene(new Scene(root));
+        stage.setTitle("Dodaj Samochod");
+        stage.show();
     }
 }
