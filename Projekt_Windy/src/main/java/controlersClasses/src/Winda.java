@@ -59,8 +59,8 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
         else {
             wyskosc = destynacja;
             this.silnik.zatrzymaj();
-            pietra.get((int)(this.wyskosc/5)).setOczekiwanie(false,true);
-            pietra.get((int)(this.wyskosc/5)).setOczekiwanie(false,false);
+            pietra.get((int)(this.wyskosc/5)).PodfierdzDojazd(true,id);
+            pietra.get((int)(this.wyskosc/5)).PodfierdzDojazd(false,id);
             this.PodfierdzWykonanie();
             this.setNewTarget((int)(this.wyskosc/5),false);
 

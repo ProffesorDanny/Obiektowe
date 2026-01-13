@@ -5,7 +5,9 @@ import java.util.ArrayList;
 public class Pietro extends Urzadzenie implements Runnable {
     private boolean[] oczekiwanie;
     private int towar;
+    private int towardoprzeniesienia;
     private int numer;
+    private int idZaparkowanejWindy;
     private ArrayList<Winda> windy = new ArrayList<>();
 
     public void addWinda(Winda w) {
@@ -30,14 +32,72 @@ public class Pietro extends Urzadzenie implements Runnable {
         }
     }
 
+    public void setTowardoprzeniesienia(int towardoprzeniesienia) {
+        this.towardoprzeniesienia = towardoprzeniesienia;
+    }
+
     public void ZmianaTowaru(int zmiana) {
         this.towar = zmiana;
     }
 
-    public int PrzeniesienieTowaru() {
-        int przeniesiony = towar;
-        towar = 0;
-        return przeniesiony;
+    public void ZaladunekTowaru(boolean kierunek,int id) {
+        if (kierunek) {
+            if (this.towar - 5 <= 0) {
+                windy.get(id).setObciazenie(windy.get(id).getObciazenie()+this.towar);
+                this.towar = 0;
+
+            }
+            else  {
+                this.towar -= 5;
+                windy.get(id).setObciazenie(windy.get(id).getObciazenie()+5);
+            }
+        }
+        else {
+            if (windy.get(id).getObciazenie() - 5 < windy.get(id).getWaga_pod()) {
+                this.towar += windy.get(id).getObciazenie();
+                windy.get(id).setObciazenie(getWaga_pod());
+            }
+            else {
+                this.towar += 5;
+                windy.get(id).setObciazenie(windy.get(id).getObciazenie()-5);
+            }
+
+        }
+    }
+    public void PrzeniesienieTowaru(boolean kierunek)
+    {
+        if (kierunek) {
+            if (this.towardoprzeniesienia - 5 <= 0) {
+                towar += this.towardoprzeniesienia;
+                this.towardoprzeniesienia = 0;
+            }
+            else {
+                towar += 5;
+                towardoprzeniesienia -= 5;
+            }
+        }
+        else  {
+            if (towar - 5 <= 0) {
+                this.towardoprzeniesienia += towar;
+                this.towar = 0;
+            }
+            else  {
+                this.towardoprzeniesienia += 5;
+                this.towar -= 5;
+            }
+        }
+    }
+
+    public void PodfierdzDojazd(boolean kierunek,int id)
+    {
+        if (kierunek && !this.oczekiwanie[1]) {
+            setOczekiwanie(false , true);
+
+        }
+        else if (!kierunek && !this.oczekiwanie[0]) {
+            setOczekiwanie(false , false);
+        }
+        idZaparkowanejWindy = id;
     }
 
     public void PrzywolajWinde(boolean kierunek) {
