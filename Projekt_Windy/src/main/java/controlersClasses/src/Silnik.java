@@ -3,9 +3,10 @@ package controlersClasses.src;
 public class Silnik extends Urzadzenie {
     private double obroty_pods;
     private double obroty_obc;
+    private boolean aktywnosc;
 
     public double poruszaj(boolean kierunek, int aktualna_waga) throws  Exception{
-        if(this.getObciazenie_max()<this.getObciazenie())
+        if(this.getObciazenie_max()<this.getObciazenie() && !aktywnosc)
         {
             throw new Exception();
         }
@@ -14,8 +15,13 @@ public class Silnik extends Urzadzenie {
     }
     public void zatrzymaj()
     {
-        obroty_obc = 0;
+        aktywnosc = false;
     }
+    public void uruchom()
+    {
+        aktywnosc = true;
+    }
+
     public Silnik(int waga_pod, int obciazenie_max, String nazwa, double obroty_pods) {
         super(waga_pod, obciazenie_max, nazwa);
         this.obroty_pods = obroty_pods;

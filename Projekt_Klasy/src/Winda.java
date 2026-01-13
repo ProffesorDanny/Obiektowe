@@ -11,7 +11,6 @@ public class Winda extends Urzadzenie implements Runnable, Listener {
     private Silnik silnik;
     private byte kierunek;
     private int id;
-    private List<Informer> pietra = new ArrayList<>();
     private List<Boolean> zadania = new ArrayList<>();
 
     public void jedz(boolean kierunek,double destynacja, double odstep) throws Exception {

@@ -26,9 +26,10 @@ public class BudynekKontroler implements Listener {
         winda1.addListener(this);
         for (int i = 0; i < 4; i++) {
             pietra.add(new Pietro("Pietro" + Integer.toString(i),i));
-            pietra.get(i).addListener(winda1);
+            pietra.get(i).addWinda(winda1);
         }
         Thread t = new Thread(winda1);
+        winda1.setThread(t);
         t.start();
     }
     @Override
@@ -74,15 +75,16 @@ public class BudynekKontroler implements Listener {
     }
 
     public void onFirstElevatorMenuClick(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DodajSamochod.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuWindy.fxml"));
         Stage stage = new Stage();
         Parent root = loader.load();
         MenuWindyKontroler secondController = loader.getController();
         secondController.setMainController(this);
         secondController.setPrzypisanaWinda(winda1);
+        secondController.setElevatorNumber(winda1.getId());
 
         stage.setScene(new Scene(root));
-        stage.setTitle("Dodaj Samochod");
+        stage.setTitle("MenuWindy");
         stage.show();
     }
 }

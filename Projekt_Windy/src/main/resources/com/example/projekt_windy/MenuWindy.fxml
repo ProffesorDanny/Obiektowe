@@ -10,7 +10,7 @@
          <font>
             <Font size="19.0" />
          </font></Label>
-      <Label layoutX="346.0" layoutY="32.0" prefHeight="34.0" prefWidth="18.0" text="0">
+      <Label fx:id="elevatorNumber" layoutX="346.0" layoutY="32.0" prefHeight="34.0" prefWidth="18.0" text="0">
          <font>
             <Font size="20.0" />
          </font>
@@ -21,5 +21,6 @@
       <Button fx:id="parterSelect" layoutX="144.0" layoutY="155.0" mnemonicParsing="false" onAction="#onParterSelectClick" prefHeight="26.0" prefWidth="52.0" text="0" />
       <Button fx:id="openDoor" layoutX="78.0" layoutY="200.0" mnemonicParsing="false" onAction="#onOpenDoorClick" prefHeight="26.0" prefWidth="52.0" text="&lt;&gt;" />
       <Button fx:id="closeDoor" layoutX="144.0" layoutY="200.0" mnemonicParsing="false" onAction="#onCloseDoorClick" prefHeight="26.0" prefWidth="52.0" text="&gt;&lt;" />
+      <Button fx:id="closeMenu" layoutX="88.0" layoutY="296.0" mnemonicParsing="false" onAction="#onCloseMenuClick" prefHeight="25.0" prefWidth="99.0" text="Zamknij Menu" />
    </children>
 </AnchorPane>

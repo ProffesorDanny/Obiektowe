@@ -16,9 +16,22 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
     private List<Boolean> zadania = new ArrayList<>();
     private List<Boolean> cele = new ArrayList();
     private List<Listener> kontrolery = new ArrayList<>();
+    private volatile Thread t;
 
     public double getWyskosc() {
         return wyskosc;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void interuption() {
+        t.interrupt();
+    }
+
+    public void setThread(Thread t) {
+        this.t = t;
     }
 
     public void jedz(boolean kierunek,double destynacja, double odstep) throws Exception {
@@ -40,10 +53,10 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
         }
         else {
             wyskosc = destynacja;
-            //this.zatrzymaj();
-            //silnik.zatrzymaj();
+            this.silnik.zatrzymaj();
             this.PodfierdzWykonanie();
             this.setNewTarget((int)(this.wyskosc/5),false);
+
         }
 
     }
@@ -51,13 +64,15 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
         przyjeteZadaniaWindy.set((int)(wyskosc/5),-1);
         przyjeteZadaniaOd.set((int)(wyskosc/5),0d);
     }
-    public void zatrzymaj()
-    {
-        predkosc = 0;
-    }
+
+
     public void zaladuj(int ladunek)
     {
         this.setObciazenie(ladunek);
+    }
+    public void uruchom()
+    {
+        this.silnik.uruchom();
     }
 
     public void action(Object... args) {
@@ -138,7 +153,9 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
             }
             if (!isQuestSelected) {
                 for (int i = 0; i < this.zadania.size(); i++) {
-                    reElekcja(i,(byte)-this.kierunek);
+                    if (przyjeteZadaniaWindy.get(i) != -1) {
+                        reElekcja(i, (byte) -this.kierunek);
+                    }
                 }
                 for (int i = (int)(wyskosc/5) ;i < this.zadania.size() && i>=0; i -= kierunek) {
                     if (zadania.get(i)) {

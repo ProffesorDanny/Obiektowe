@@ -6,10 +6,10 @@ public class Pietro extends Urzadzenie implements Runnable {
     private boolean[] oczekiwanie;
     private int towar;
     private int numer;
-    private ArrayList<Listener> windy = new ArrayList<>();
+    private ArrayList<Winda> windy = new ArrayList<>();
 
-    public void addListener(Listener l) {
-        windy.add(l);
+    public void addWinda(Winda w) {
+        windy.add(w);
     }
 
     public boolean getOczekiwanie(boolean kierunek) {
@@ -43,14 +43,14 @@ public class Pietro extends Urzadzenie implements Runnable {
     public void PrzywolajWinde(boolean kierunek) {
         if (kierunek && !this.oczekiwanie[1]) {
             setOczekiwanie(true , true);
-            for (Listener l : windy) {
-                l.action(1,this.numer);
+            for (Winda w : windy) {
+                w.action(1,this.numer);
             }
         }
         else if (!kierunek && !this.oczekiwanie[0]) {
             setOczekiwanie(true , false);
-            for (Listener l : windy) {
-                l.action(-1,this.numer);
+            for (Winda w : windy) {
+                w.action(-1,this.numer);
             }
         }
 
