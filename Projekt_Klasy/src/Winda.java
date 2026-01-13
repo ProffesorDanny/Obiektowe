@@ -104,12 +104,12 @@ public class Winda extends Urzadzenie implements Runnable, Listener {
                     }
                 }
             }
-            if (kierunek%5==0)
-            {
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {}
-            }
+           // if (kierunek%5==0)
+          //  {
+               // try {
+                //    Thread.sleep(10000);
+              //  } catch (InterruptedException e) {}
+          //  }
 
         }
     }

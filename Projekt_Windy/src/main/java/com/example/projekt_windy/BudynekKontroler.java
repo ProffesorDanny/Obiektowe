@@ -30,6 +30,7 @@ public class BudynekKontroler implements Listener {
         }
         Thread t = new Thread(winda1);
         winda1.setThread(t);
+        winda1.setPietra(this.pietra);
         t.start();
     }
     @Override

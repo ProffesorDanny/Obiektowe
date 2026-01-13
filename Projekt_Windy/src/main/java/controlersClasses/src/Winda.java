@@ -16,6 +16,7 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
     private List<Boolean> zadania = new ArrayList<>();
     private List<Boolean> cele = new ArrayList();
     private List<Listener> kontrolery = new ArrayList<>();
+    ArrayList<Pietro> pietra;
     private volatile Thread t;
 
     public double getWyskosc() {
@@ -32,6 +33,10 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
 
     public void setThread(Thread t) {
         this.t = t;
+    }
+
+    public void setPietra(ArrayList<Pietro> pietra) {
+        this.pietra = pietra;
     }
 
     public void jedz(boolean kierunek,double destynacja, double odstep) throws Exception {
@@ -54,6 +59,8 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
         else {
             wyskosc = destynacja;
             this.silnik.zatrzymaj();
+            pietra.get((int)(this.wyskosc/5)).setOczekiwanie(false,true);
+            pietra.get((int)(this.wyskosc/5)).setOczekiwanie(false,false);
             this.PodfierdzWykonanie();
             this.setNewTarget((int)(this.wyskosc/5),false);
 
@@ -85,7 +92,7 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
         double odleglosc;
         if (cele.get(pietro)) {
             if (this.kierunek * (pietro - wyskosc / 5) >= 0) {
-                odleglosc = 0;
+                odleglosc = 0.1D;
             }
             else {
                 odleglosc = (double) this.cele.size() /1.5;
@@ -102,10 +109,12 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
             przyjeteZadaniaWindy.set(pietro,this.id);
         }
     }
-    public synchronized void reElekcja(int pietro, byte kierunek)
+    public synchronized void reElekcja(byte kierunek)
     {
         for (int i = 0; i < przyjeteZadaniaWindy.size(); i++) {
-            elekcja(i,kierunek); //problem braku zajomości kierunku przywołania, do rozwiązania w przyszłości
+            if (przyjeteZadaniaWindy.get(i) != -1) {
+                elekcja(i, kierunek); //problem braku zajomości kierunku przywołania, do rozwiązania w przyszłości
+            }
         }
     }
 
@@ -140,11 +149,12 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
             } catch (InterruptedException e) {}
             this.refreshOwnTasks();
             boolean isQuestSelected = false;
-            for (int i = (int)(wyskosc/5) ;i < this.zadania.size() && i>=0; i += kierunek) {
+            for (int i = (int)(wyskosc/5)+(kierunek+1)/2 ;i < this.zadania.size() && i>=0; i += kierunek) {
                 if (zadania.get(i)) {
                     try {
                         isQuestSelected = true;
                         jedz((kierunek > 0), i * 5, 0.1);
+                        break;
                     }
                     catch (Exception e) {
                         predkosc = 0;
@@ -152,17 +162,14 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
                 }
             }
             if (!isQuestSelected) {
-                for (int i = 0; i < this.zadania.size(); i++) {
-                    if (przyjeteZadaniaWindy.get(i) != -1) {
-                        reElekcja(i, (byte) -this.kierunek);
-                    }
-                }
+                        reElekcja((byte) -this.kierunek);
                 for (int i = (int)(wyskosc/5) ;i < this.zadania.size() && i>=0; i -= kierunek) {
                     if (zadania.get(i)) {
                         try {
                             isQuestSelected = true;
                             kierunek = (byte) (-kierunek);
                             jedz((kierunek > 0), i * 5, 0.1);
+                            break;
                         }
                         catch (Exception e) {
                             predkosc = 0;

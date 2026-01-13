@@ -6,7 +6,7 @@ public class Silnik extends Urzadzenie {
     private boolean aktywnosc;
 
     public double poruszaj(boolean kierunek, int aktualna_waga) throws  Exception{
-        if(this.getObciazenie_max()<this.getObciazenie() && !aktywnosc)
+        if(this.getObciazenie_max()<this.getObciazenie() || !aktywnosc)
         {
             throw new Exception();
         }
@@ -26,5 +26,6 @@ public class Silnik extends Urzadzenie {
         super(waga_pod, obciazenie_max, nazwa);
         this.obroty_pods = obroty_pods;
         this.obroty_obc = 0;
+        this.uruchom();
     }
 }

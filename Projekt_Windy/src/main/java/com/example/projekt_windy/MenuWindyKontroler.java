@@ -9,11 +9,13 @@ import javafx.stage.Stage;
 
 public class MenuWindyKontroler {
 
+    @FXML
     private Label elevatorNumber;
     @FXML
     private Button closeMenu;
     private BudynekKontroler mainCotroler;
     private Winda przypisanaWinda;
+
 
     public void setPrzypisanaWinda(Winda przypisanaWinda) {
         this.przypisanaWinda = przypisanaWinda;
