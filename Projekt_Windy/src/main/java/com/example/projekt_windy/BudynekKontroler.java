@@ -19,6 +19,8 @@ import java.util.ArrayList;
 public class BudynekKontroler implements Listener {
     public ImageView elevatorOne;
     @FXML
+    private TextField elevatorFloorPackagesTextField;
+    @FXML
     private TextField rightFloorPackagesTextField;
     private Silnik silnik;
     private Winda winda1;
@@ -30,6 +32,8 @@ public class BudynekKontroler implements Listener {
         for (int i = 0; i < 4; i++) {
             pietra.add(new Pietro("Pietro" + Integer.toString(i),i));
             pietra.get(i).addWinda(winda1);
+            Thread t1 = new Thread(pietra.get(i));
+            t1.start();
         }
         Thread t = new Thread(winda1);
         winda1.setThread(t);
@@ -37,17 +41,26 @@ public class BudynekKontroler implements Listener {
         t.start();
         rightFloorPackagesTextField.setOnAction(event -> {
             try {
-                if (Integer.parseInt(rightFloorPackagesTextField.toString())<0)
+                if (Integer.parseInt(rightFloorPackagesTextField.getText())<0)
                 {
                     throw new NumberFormatException();
                 }
-                pietra.get(1).setTowardoprzeniesienia(Integer.parseInt(rightFloorPackagesTextField.toString()));
+                pietra.get(1).setTowardoprzeniesienia(Integer.parseInt(rightFloorPackagesTextField.getText()));
+                System.out.println("Cos");
             }
             catch (NumberFormatException e) {
                 System.out.println("Nieprawidłowe dane");
                 rightFloorPackagesTextField.setText(String.valueOf(pietra.get(1).getTowardoprzeniesienia()));
             }
 
+        });
+        rightFloorPackagesTextField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+            if (!isNowFocused) {
+                pietra.get(1).setEdytowanie(false);
+            }
+        });
+        rightFloorPackagesTextField.setOnMouseClicked(event -> {
+            pietra.get(1).setEdytowanie(true);
         });
     }
     @Override
@@ -56,6 +69,11 @@ public class BudynekKontroler implements Listener {
         Platform.runLater(()->{
             elevatorOne.setTranslateY(winda1.getWyskosc()*(-50));
         });
+        elevatorFloorPackagesTextField.setText(String.valueOf(pietra.get(1).getTowar()));
+        if (!pietra.get(1).getEdytowanie()) {
+            rightFloorPackagesTextField.setText(String.valueOf(pietra.get(1).getTowardoprzeniesienia()));
+        }
+
     }
 
     public void onThirdFloorUpButtonClick(ActionEvent actionEvent) {

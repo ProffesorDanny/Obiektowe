@@ -8,8 +8,10 @@ public class Pietro extends Urzadzenie implements Runnable {
     private int towardoprzeniesienia;
     private int numer;
     private int idZaparkowanejWindy;
+    private boolean edytowanie;
     private boolean kierunekzaladunku;
     private ArrayList<Winda> windy = new ArrayList<>();
+    private ArrayList<Listener> kontrolery = new ArrayList<>();
 
     public void addWinda(Winda w) {
         windy.add(w);
@@ -28,6 +30,16 @@ public class Pietro extends Urzadzenie implements Runnable {
         return towardoprzeniesienia;
     }
 
+    public int getTowar() {
+        return towar;
+    }
+    public boolean getEdytowanie() {
+        return edytowanie;
+    }
+    public void setEdytowanie(boolean edytowanie) {
+        this.edytowanie = edytowanie;
+    }
+
     public void setOczekiwanie(boolean oczekiwanie, boolean kierunek) {
         if (kierunek) {
             this.oczekiwanie[1] = oczekiwanie;
@@ -43,6 +55,10 @@ public class Pietro extends Urzadzenie implements Runnable {
 
     public void setTowardoprzeniesienia(int towardoprzeniesienia) {
         this.towardoprzeniesienia = towardoprzeniesienia;
+    }
+
+    public void addListener(Listener l) {
+        kontrolery.add(l);
     }
 
 
@@ -73,6 +89,7 @@ public class Pietro extends Urzadzenie implements Runnable {
             }
 
         }
+        inform();
     }
     public void PrzeniesienieTowaru()
     {
@@ -96,6 +113,7 @@ public class Pietro extends Urzadzenie implements Runnable {
                 this.towar -= 5;
             }
         }
+        inform();
     }
 
     public void PodfierdzDojazd(boolean kierunek,int id)
@@ -128,13 +146,18 @@ public class Pietro extends Urzadzenie implements Runnable {
     }
     public void inform()
     {
-
+        for (Listener l : kontrolery)
+        {
+            l.action();
+        }
     }
 
     public Pietro(String nazwa, int numer) {
         super(nazwa);
         this.oczekiwanie = new boolean[]{false, false};
         this.numer = numer;
+        this.kierunekzaladunku = true;
+        this.edytowanie = false;
     }
     @Override
     public void run() {
