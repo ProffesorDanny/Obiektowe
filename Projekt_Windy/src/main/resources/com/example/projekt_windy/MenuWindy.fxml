@@ -22,5 +22,11 @@
       <Button fx:id="openDoor" layoutX="78.0" layoutY="200.0" mnemonicParsing="false" onAction="#onOpenDoorClick" prefHeight="26.0" prefWidth="52.0" text="&lt;&gt;" />
       <Button fx:id="closeDoor" layoutX="144.0" layoutY="200.0" mnemonicParsing="false" onAction="#onCloseDoorClick" prefHeight="26.0" prefWidth="52.0" text="&gt;&lt;" />
       <Button fx:id="closeMenu" layoutX="88.0" layoutY="296.0" mnemonicParsing="false" onAction="#onCloseMenuClick" prefHeight="25.0" prefWidth="99.0" text="Zamknij Menu" />
+      <Button fx:id="leftChangeButton" layoutX="325.0" layoutY="214.0" mnemonicParsing="false" onAction="#onLeftChangeButtonClick" prefHeight="26.0" prefWidth="42.0" text="&lt;&lt;" />
+      <Button fx:id="rightChangeButton" layoutX="453.0" layoutY="214.0" mnemonicParsing="false" onAction="#onRightChangeButtonClick" prefHeight="26.0" prefWidth="42.0" text="&gt;&gt;" />
+      <TextField fx:id="actualCargoTextField" layoutX="375.0" layoutY="104.0" prefHeight="26.0" prefWidth="72.0" />
+      <Label layoutX="395.0" layoutY="80.0" text="Towar" />
+      <TextField fx:id="elevatorChangeCargoTextField" layoutX="369.0" layoutY="214.0" prefHeight="26.0" prefWidth="84.0" />
+      <Label layoutX="371.0" layoutY="191.0" text="Przenieś Towar" />
    </children>
 </AnchorPane>

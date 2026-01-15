@@ -8,6 +8,7 @@ public class Pietro extends Urzadzenie implements Runnable {
     private int towardoprzeniesienia;
     private int numer;
     private int idZaparkowanejWindy;
+    private boolean kierunekzaladunku;
     private ArrayList<Winda> windy = new ArrayList<>();
 
     public void addWinda(Winda w) {
@@ -23,6 +24,10 @@ public class Pietro extends Urzadzenie implements Runnable {
         }
     }
 
+    public int getTowardoprzeniesienia() {
+        return towardoprzeniesienia;
+    }
+
     public void setOczekiwanie(boolean oczekiwanie, boolean kierunek) {
         if (kierunek) {
             this.oczekiwanie[1] = oczekiwanie;
@@ -32,41 +37,46 @@ public class Pietro extends Urzadzenie implements Runnable {
         }
     }
 
+    public void setKierunekZaladunku(boolean kierunek) {
+        this.kierunekzaladunku = kierunek;
+    }
+
     public void setTowardoprzeniesienia(int towardoprzeniesienia) {
         this.towardoprzeniesienia = towardoprzeniesienia;
     }
 
-    public void ZmianaTowaru(int zmiana) {
-        this.towar = zmiana;
-    }
 
-    public void ZaladunekTowaru(boolean kierunek,int id) {
+    public void ZaladunekTowaru(boolean kierunek,int id, int towar) throws NumberFormatException {
+        if (towar<0)
+        {
+            throw new NumberFormatException();
+        }
         if (kierunek) {
-            if (this.towar - 5 <= 0) {
+            if (this.towar - towar <= 0) {
                 windy.get(id).setObciazenie(windy.get(id).getObciazenie()+this.towar);
                 this.towar = 0;
 
             }
             else  {
-                this.towar -= 5;
-                windy.get(id).setObciazenie(windy.get(id).getObciazenie()+5);
+                this.towar -= towar;
+                windy.get(id).setObciazenie(windy.get(id).getObciazenie()+towar);
             }
         }
         else {
-            if (windy.get(id).getObciazenie() - 5 < windy.get(id).getWaga_pod()) {
-                this.towar += windy.get(id).getObciazenie();
+            if (windy.get(id).getObciazenie() - towar < windy.get(id).getWaga_pod()) {
+                this.towar += windy.get(id).getObciazenie()-windy.get(id).getWaga_pod();
                 windy.get(id).setObciazenie(getWaga_pod());
             }
             else {
-                this.towar += 5;
-                windy.get(id).setObciazenie(windy.get(id).getObciazenie()-5);
+                this.towar += towar;
+                windy.get(id).setObciazenie(windy.get(id).getObciazenie()-towar);
             }
 
         }
     }
-    public void PrzeniesienieTowaru(boolean kierunek)
+    public void PrzeniesienieTowaru()
     {
-        if (kierunek) {
+        if (kierunekzaladunku) {
             if (this.towardoprzeniesienia - 5 <= 0) {
                 towar += this.towardoprzeniesienia;
                 this.towardoprzeniesienia = 0;
@@ -128,6 +138,15 @@ public class Pietro extends Urzadzenie implements Runnable {
     }
     @Override
     public void run() {
+        while (true) {
+            try {
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e) {
+            }
+            this.PrzeniesienieTowaru();
+
+        }
 
     }
 

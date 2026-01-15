@@ -27,6 +27,10 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
         return id;
     }
 
+    public double getPredkosc() {
+        return predkosc;
+    }
+
     public void interuption() {
         t.interrupt();
     }

@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 
 public class BudynekKontroler implements Listener {
     public ImageView elevatorOne;
+    @FXML
+    private TextField rightFloorPackagesTextField;
     private Silnik silnik;
     private Winda winda1;
     ArrayList<Pietro> pietra = new ArrayList<>();
@@ -32,6 +35,20 @@ public class BudynekKontroler implements Listener {
         winda1.setThread(t);
         winda1.setPietra(this.pietra);
         t.start();
+        rightFloorPackagesTextField.setOnAction(event -> {
+            try {
+                if (Integer.parseInt(rightFloorPackagesTextField.toString())<0)
+                {
+                    throw new NumberFormatException();
+                }
+                pietra.get(1).setTowardoprzeniesienia(Integer.parseInt(rightFloorPackagesTextField.toString()));
+            }
+            catch (NumberFormatException e) {
+                System.out.println("Nieprawidłowe dane");
+                rightFloorPackagesTextField.setText(String.valueOf(pietra.get(1).getTowardoprzeniesienia()));
+            }
+
+        });
     }
     @Override
     public void action(Object... args)
@@ -83,9 +100,18 @@ public class BudynekKontroler implements Listener {
         secondController.setMainController(this);
         secondController.setPrzypisanaWinda(winda1);
         secondController.setElevatorNumber(winda1.getId());
+        secondController.setActualCargoTextField(winda1.getObciazenie()-winda1.getWaga_pod());
 
         stage.setScene(new Scene(root));
         stage.setTitle("MenuWindy");
         stage.show();
+    }
+
+    public void onFirstFloorRightMoveButtonClick(ActionEvent actionEvent) {
+        pietra.get(1).setKierunekZaladunku(false);
+    }
+
+    public void onFirstFloorLeftMoveButtonClick(ActionEvent actionEvent) {
+        pietra.get(1).setKierunekZaladunku(true);
     }
 }

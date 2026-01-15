@@ -53,12 +53,42 @@
                                                       </SplitPane>
                                                       <Button fx:id="thirdFloorUpButton" layoutX="40.0" layoutY="76.0" mnemonicParsing="false" onAction="#onThirdFloorUpButtonClick" text="Góra" />
                                                       <Button fx:id="thirdFloorDownButton" layoutX="43.0" layoutY="117.0" mnemonicParsing="false" onAction="#onThirdFloorDownButtonClick" text="Dół" />
+                                                      <ImageView fitHeight="123.0" fitWidth="230.0" layoutX="96.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@Paczki.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <TextField alignment="CENTER" layoutX="135.0" layoutY="104.0" prefHeight="26.0" prefWidth="72.0" text="0" />
+                                                      <ImageView fitHeight="103.0" fitWidth="148.0" layoutX="1500.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@Paczki.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <TextField alignment="CENTER" layoutX="1528.0" layoutY="117.0" prefHeight="26.0" prefWidth="85.0" text="0" />
+                                                      <Button layoutX="666.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="50.0" text="&lt;&lt;" />
+                                                      <Button layoutX="831.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="50.0" text="&gt;&gt;" />
+                                                      <Label layoutX="730.0" layoutY="18.0" text="Kieunek Przesyłu" />
                                                    </children>
                                                 </AnchorPane>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" SplitPane.resizableWithParent="false">
                                                    <children>
                                                       <Button fx:id="secondFloorUpButton" layoutX="39.0" layoutY="84.0" mnemonicParsing="false" onAction="#onSecondFloorUpButtonClick" text="Góra" />
                                                       <Button fx:id="secondFloorDownButton" layoutX="42.0" layoutY="129.0" mnemonicParsing="false" onAction="#onSecondFloorDownButtonClick" text="Dół" />
+                                                      <ImageView fitHeight="123.0" fitWidth="179.0" layoutX="94.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@Paczki.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <TextField alignment="CENTER" layoutX="141.0" layoutY="110.0" prefHeight="26.0" prefWidth="72.0" text="0" />
+                                                      <ImageView fitHeight="103.0" fitWidth="142.0" layoutX="1503.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@Paczki.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <TextField alignment="CENTER" layoutX="1530.0" layoutY="97.0" prefHeight="26.0" prefWidth="86.0" text="0" />
+                                                      <Button layoutX="831.0" layoutY="23.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="50.0" text="&gt;&gt;" />
+                                                      <Button layoutX="665.0" layoutY="23.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="50.0" text="&lt;&lt;" />
+                                                      <Label layoutX="724.0" layoutY="27.0" text="Kierunek Przesyłu" />
                                                    </children></AnchorPane>
                                             </items>
                                           </SplitPane>
@@ -72,11 +102,41 @@
                                                    <children>
                                                       <Button fx:id="firstFloorUpButton" layoutX="39.0" layoutY="91.0" mnemonicParsing="false" onAction="#onFirstFloorUpButtonClick" text="Góra" />
                                                       <Button fx:id="firstFloorDownButton" layoutX="43.0" layoutY="129.0" mnemonicParsing="false" onAction="#onFirstFloorDownButtonClick" text="Dół" />
+                                                      <ImageView fitHeight="123.0" fitWidth="170.0" layoutX="92.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@Paczki.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <TextField fx:id="elevatorFloorPackagesTextField" alignment="CENTER" layoutX="138.0" layoutY="104.0" prefHeight="26.0" prefWidth="72.0" text="0" />
+                                                      <ImageView fitHeight="103.0" fitWidth="142.0" layoutX="1507.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@Paczki.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <TextField fx:id="rightFloorPackagesTextField" alignment="CENTER" layoutX="1534.0" layoutY="91.0" prefHeight="26.0" prefWidth="86.0" text="0" />
+                                                      <Button fx:id="firstFloorRightMoveButton" layoutX="831.0" layoutY="23.0" mnemonicParsing="false" onAction="#onFirstFloorRightMoveButtonClick" prefHeight="26.0" prefWidth="50.0" text="&gt;&gt;" />
+                                                      <Button fx:id="firstFloorLeftMoveButton" layoutX="669.0" layoutY="23.0" mnemonicParsing="false" onAction="#onFirstFloorLeftMoveButtonClick" prefHeight="26.0" prefWidth="50.0" text="&lt;&lt;" />
+                                                      <Label layoutX="729.0" layoutY="27.0" text="Kierunek Przesyłu" />
                                                    </children></AnchorPane>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" SplitPane.resizableWithParent="false">
                                                    <children>
                                                       <Button fx:id="parterUpButton" layoutX="41.0" layoutY="78.0" mnemonicParsing="false" onAction="#onParterUpButtonClick" text="Góra" />
                                                       <Button fx:id="parterDownButton" layoutX="45.0" layoutY="129.0" mnemonicParsing="false" onAction="#onParterDownButtonClick" text="Dół" />
+                                                      <ImageView fitHeight="123.0" fitWidth="170.0" layoutX="90.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@Paczki.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <TextField alignment="CENTER" layoutX="144.0" layoutY="91.0" prefHeight="26.0" prefWidth="72.0" text="0" />
+                                                      <ImageView fitHeight="103.0" fitWidth="142.0" layoutX="1506.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@Paczki.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <TextField alignment="CENTER" layoutX="1533.0" layoutY="91.0" prefHeight="26.0" prefWidth="86.0" text="0" />
+                                                      <Button layoutX="665.0" layoutY="23.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="50.0" text="&lt;&lt;" />
+                                                      <Button layoutX="831.0" layoutY="24.0" mnemonicParsing="false" prefWidth="50.0" text="&gt;&gt;" />
+                                                      <Label layoutX="725.0" layoutY="28.0" text="Kierunek Przesyłu" />
                                                    </children></AnchorPane>
                                             </items>
                                           </SplitPane>
