@@ -50,11 +50,17 @@ public class MenuWindyKontroler {
     }
 
     public void onOpenDoorClick(ActionEvent actionEvent) {
-        //inplementacja tego po implementacji piętra
+
+            mainCotroler.pietra.get((int) przypisanaWinda.getWyskosc() / 5).interupt();
     }
 
     public void onCloseDoorClick(ActionEvent actionEvent) {
-        przypisanaWinda.uruchom();
+        try {
+            mainCotroler.pietra.get((int) przypisanaWinda.getWyskosc() / 5).resume();
+        }
+        catch (IndexOutOfBoundsException e) {
+
+        }
     }
 
     public void setMainController(BudynekKontroler budynekKontroler) {
@@ -67,9 +73,9 @@ public class MenuWindyKontroler {
     }
 
     public void onRightChangeButtonClick(ActionEvent actionEvent) {
-        if (przypisanaWinda.getPredkosc() != 0)
+        if (przypisanaWinda.getPredkosc() == 0)
         {   try {
-            mainCotroler.pietra.get((int)przypisanaWinda.getWyskosc()/5).ZaladunekTowaru(false,przypisanaWinda.getId(),Integer.parseInt(elevatorChangeCargoTextField.toString()));
+            mainCotroler.pietra.get((int)przypisanaWinda.getWyskosc()/5).ZaladunekTowaru(false,przypisanaWinda.getId()-1,Integer.parseInt(elevatorChangeCargoTextField.getText()));
             actualCargoTextField.setText(String.valueOf(przypisanaWinda.getObciazenie()-przypisanaWinda.getWaga_pod()));
         }
         catch (Exception e) {
@@ -80,9 +86,9 @@ public class MenuWindyKontroler {
     }
 
     public void onLeftChangeButtonClick(ActionEvent actionEvent) {
-        if (przypisanaWinda.getPredkosc() != 0)
+        if (przypisanaWinda.getPredkosc() == 0)
         {   try {
-            mainCotroler.pietra.get((int)przypisanaWinda.getWyskosc()/5).ZaladunekTowaru(true,przypisanaWinda.getId(),Integer.parseInt(elevatorChangeCargoTextField.toString()));
+            mainCotroler.pietra.get((int)przypisanaWinda.getWyskosc()/5).ZaladunekTowaru(true,przypisanaWinda.getId()-1,Integer.parseInt(elevatorChangeCargoTextField.getText()));
             actualCargoTextField.setText(String.valueOf(przypisanaWinda.getObciazenie()-przypisanaWinda.getWaga_pod()));
         }
         catch (Exception e) {

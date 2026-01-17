@@ -17,15 +17,32 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class BudynekKontroler implements Listener {
-    public ImageView elevatorOne;
     @FXML
-    private TextField elevatorFloorPackagesTextField;
+    private ImageView elevatorOne;
     @FXML
-    private TextField rightFloorPackagesTextField;
+    private TextField rightThirdFloorPackegesTextField;
+    @FXML
+    private TextField elevatorThirdFloorPackegesTextField;
+    @FXML
+    private TextField rightSecondFloorPackegesTextField;
+    @FXML
+    private TextField elevatorSecondFloorPackegesTextField;
+    @FXML
+    private TextField elevatorParterPackegesTextField;
+    @FXML
+    private TextField rightParterFloorPackegesTextField;
+    @FXML
+    private TextField elevatorFirstFloorPackagesTextField;
+    @FXML
+    private TextField rightFirstFloorPackagesTextField;
+    private TextField[] rightText;
+    private TextField[] elevatorText;
     private Silnik silnik;
     private Winda winda1;
     ArrayList<Pietro> pietra = new ArrayList<>();
     public void initialize() {
+        elevatorText = new TextField[] {elevatorParterPackegesTextField, elevatorFirstFloorPackagesTextField, elevatorSecondFloorPackegesTextField,elevatorThirdFloorPackegesTextField};
+        rightText = new TextField[] {rightParterFloorPackegesTextField, rightFirstFloorPackagesTextField, rightSecondFloorPackegesTextField, rightThirdFloorPackegesTextField};
         silnik = new Silnik(80,1000,"Silneks",10);
         winda1 = new Winda(200,600,"Windeks",silnik);
         winda1.addListener(this);
@@ -39,40 +56,46 @@ public class BudynekKontroler implements Listener {
         winda1.setThread(t);
         winda1.setPietra(this.pietra);
         t.start();
-        rightFloorPackagesTextField.setOnAction(event -> {
-            try {
-                if (Integer.parseInt(rightFloorPackagesTextField.getText())<0)
-                {
-                    throw new NumberFormatException();
+        for (int i = 0; i < 4; i++) {
+            final int index = i;
+            rightText[i].setOnAction(event -> {
+                try {
+                    if (Integer.parseInt(rightText[index].getText()) < 0) {
+                        throw new NumberFormatException();
+                    }
+                    pietra.get(index).setTowardoprzeniesienia(Integer.parseInt(rightText[index].getText()));
+                    System.out.println("Cos");
+                } catch (NumberFormatException e) {
+                    System.out.println("Nieprawidłowe dane");
+                    rightText[index].setText(String.valueOf(pietra.get(index).getTowardoprzeniesienia()));
                 }
-                pietra.get(1).setTowardoprzeniesienia(Integer.parseInt(rightFloorPackagesTextField.getText()));
-                System.out.println("Cos");
-            }
-            catch (NumberFormatException e) {
-                System.out.println("Nieprawidłowe dane");
-                rightFloorPackagesTextField.setText(String.valueOf(pietra.get(1).getTowardoprzeniesienia()));
-            }
 
-        });
-        rightFloorPackagesTextField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
-            if (!isNowFocused) {
-                pietra.get(1).setEdytowanie(false);
-            }
-        });
-        rightFloorPackagesTextField.setOnMouseClicked(event -> {
-            pietra.get(1).setEdytowanie(true);
-        });
+            });
+            rightText[i].focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+                if (!isNowFocused) {
+                    pietra.get(index).setEdytowanie(false);
+                }
+            });
+            rightText[i].setOnMouseClicked(event -> {
+                pietra.get(index).setEdytowanie(true);
+            });
+        }
     }
     @Override
     public void action(Object... args)
     {
         Platform.runLater(()->{
             elevatorOne.setTranslateY(winda1.getWyskosc()*(-50));
-        });
-        elevatorFloorPackagesTextField.setText(String.valueOf(pietra.get(1).getTowar()));
-        if (!pietra.get(1).getEdytowanie()) {
-            rightFloorPackagesTextField.setText(String.valueOf(pietra.get(1).getTowardoprzeniesienia()));
+
+        for (int i = 0 ; i<4;i++) {
+            elevatorText[i].setText(String.valueOf(pietra.get(i).getTowar()));
+            if (!pietra.get(i).getEdytowanie()) {
+                rightText[i].setText(String.valueOf(pietra.get(i).getTowardoprzeniesienia()));
+            }
         }
+
+        });
+
 
     }
 
@@ -131,5 +154,30 @@ public class BudynekKontroler implements Listener {
 
     public void onFirstFloorLeftMoveButtonClick(ActionEvent actionEvent) {
         pietra.get(1).setKierunekZaladunku(true);
+    }
+
+
+    public void onParterFloorLeftMoveButtonClick(ActionEvent actionEvent) {
+        pietra.get(0).setKierunekZaladunku(true);
+    }
+
+    public void onParterFloorRightMoveButtonClick(ActionEvent actionEvent) {
+        pietra.get(0).setKierunekZaladunku(false);
+    }
+
+    public void onSecondFloorRightMoveButtonClick(ActionEvent actionEvent) {
+        pietra.get(2).setKierunekZaladunku(false);
+    }
+
+    public void onSecondFloorLeftMoveButtonClick(ActionEvent actionEvent) {
+        pietra.get(2).setKierunekZaladunku(true);
+    }
+
+    public void onThirdFloorLeftMoveButtonClick(ActionEvent actionEvent) {
+        pietra.get(3).setKierunekZaladunku(true);
+    }
+
+    public void onThirdFloorRightMoveButtonClick(ActionEvent actionEvent) {
+        pietra.get(3).setKierunekZaladunku(false);
     }
 }

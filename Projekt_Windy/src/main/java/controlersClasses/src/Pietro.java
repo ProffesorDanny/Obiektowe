@@ -3,6 +3,7 @@ package controlersClasses.src;
 import java.util.ArrayList;
 
 public class Pietro extends Urzadzenie implements Runnable {
+    private int czasoczekiwania;
     private boolean[] oczekiwanie;
     private int towar;
     private int towardoprzeniesienia;
@@ -36,6 +37,7 @@ public class Pietro extends Urzadzenie implements Runnable {
     public boolean getEdytowanie() {
         return edytowanie;
     }
+
     public void setEdytowanie(boolean edytowanie) {
         this.edytowanie = edytowanie;
     }
@@ -55,6 +57,10 @@ public class Pietro extends Urzadzenie implements Runnable {
 
     public void setTowardoprzeniesienia(int towardoprzeniesienia) {
         this.towardoprzeniesienia = towardoprzeniesienia;
+    }
+
+    public void setIdZaparkowanejWindy(int idZaparkowanejWindy) {
+        this.idZaparkowanejWindy = idZaparkowanejWindy;
     }
 
     public void addListener(Listener l) {
@@ -128,6 +134,25 @@ public class Pietro extends Urzadzenie implements Runnable {
         idZaparkowanejWindy = id;
     }
 
+    public void resume() throws IndexOutOfBoundsException
+    {
+        if (idZaparkowanejWindy == -1)
+        {
+            throw new IndexOutOfBoundsException();
+        }
+        windy.get(idZaparkowanejWindy-1).uruchom();
+        czasoczekiwania = 0;
+        idZaparkowanejWindy = -1;
+    }
+
+    public void interupt()
+    {
+        if (idZaparkowanejWindy != -1) {
+            czasoczekiwania = 0;
+        }
+    }
+
+
     public void PrzywolajWinde(boolean kierunek) {
         if (kierunek && !this.oczekiwanie[1]) {
             setOczekiwanie(true , true);
@@ -158,6 +183,8 @@ public class Pietro extends Urzadzenie implements Runnable {
         this.numer = numer;
         this.kierunekzaladunku = true;
         this.edytowanie = false;
+        this.idZaparkowanejWindy = -1;
+        this.czasoczekiwania = 0;
     }
     @Override
     public void run() {
@@ -168,6 +195,17 @@ public class Pietro extends Urzadzenie implements Runnable {
             catch (InterruptedException e) {
             }
             this.PrzeniesienieTowaru();
+            if (idZaparkowanejWindy != -1) {
+                if (czasoczekiwania > 10)
+                {
+                    resume();
+                }
+                else
+                {
+                    czasoczekiwania += 1;
+                }
+            }
+
 
         }
 

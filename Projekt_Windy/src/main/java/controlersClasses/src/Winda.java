@@ -63,8 +63,7 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
         else {
             wyskosc = destynacja;
             this.silnik.zatrzymaj();
-            pietra.get((int)(this.wyskosc/5)).PodfierdzDojazd(true,id);
-            pietra.get((int)(this.wyskosc/5)).PodfierdzDojazd(false,id);
+            this.predkosc = 0;
             this.PodfierdzWykonanie();
             this.setNewTarget((int)(this.wyskosc/5),false);
 
@@ -72,6 +71,9 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
 
     }
     public synchronized void PodfierdzWykonanie() {
+        pietra.get((int)(this.wyskosc/5)).PodfierdzDojazd(true,id);
+        pietra.get((int)(this.wyskosc/5)).PodfierdzDojazd(false,id);
+        pietra.get((int)(this.wyskosc/5)).setIdZaparkowanejWindy(this.id);
         przyjeteZadaniaWindy.set((int)(wyskosc/5),-1);
         przyjeteZadaniaOd.set((int)(wyskosc/5),0d);
     }
