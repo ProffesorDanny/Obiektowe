@@ -11,12 +11,8 @@ public class Pietro extends Urzadzenie implements Runnable {
     private int idZaparkowanejWindy;
     private boolean edytowanie;
     private boolean kierunekzaladunku;
-    private ArrayList<Winda> windy = new ArrayList<>();
+    private Budynek budynek;
     private ArrayList<Listener> kontrolery = new ArrayList<>();
-
-    public void addWinda(Winda w) {
-        windy.add(w);
-    }
 
     public boolean getOczekiwanie(boolean kierunek) {
         if (kierunek) {
@@ -73,25 +69,29 @@ public class Pietro extends Urzadzenie implements Runnable {
         {
             throw new NumberFormatException();
         }
+        else if (towar==0)
+        {
+            return;
+        }
         if (kierunek) {
             if (this.towar - towar <= 0) {
-                windy.get(id).setObciazenie(windy.get(id).getObciazenie()+this.towar);
+                budynek.dodajObciarzenie(this.towar, id);
                 this.towar = 0;
 
             }
             else  {
                 this.towar -= towar;
-                windy.get(id).setObciazenie(windy.get(id).getObciazenie()+towar);
+                budynek.dodajObciarzenie(id, towar);
             }
         }
         else {
-            if (windy.get(id).getObciazenie() - towar < windy.get(id).getWaga_pod()) {
-                this.towar += windy.get(id).getObciazenie()-windy.get(id).getWaga_pod();
-                windy.get(id).setObciazenie(getWaga_pod());
+            if (budynek.czyWindaPusta(id, towar)) {
+                this.towar += budynek.podajRoznice(id);
+                budynek.dodajObciarzenie(0, id);
             }
             else {
                 this.towar += towar;
-                windy.get(id).setObciazenie(windy.get(id).getObciazenie()-towar);
+                budynek.dodajObciarzenie(-towar, id);
             }
 
         }
@@ -140,7 +140,7 @@ public class Pietro extends Urzadzenie implements Runnable {
         {
             throw new IndexOutOfBoundsException();
         }
-        windy.get(idZaparkowanejWindy-1).uruchom();
+        budynek.uruchomWinde(idZaparkowanejWindy);
         czasoczekiwania = 0;
         idZaparkowanejWindy = -1;
     }
@@ -156,15 +156,11 @@ public class Pietro extends Urzadzenie implements Runnable {
     public void PrzywolajWinde(boolean kierunek) {
         if (kierunek && !this.oczekiwanie[1]) {
             setOczekiwanie(true , true);
-            for (Winda w : windy) {
-                w.action(1,this.numer);
-            }
+            budynek.InformElevators((byte)1,this.numer);
         }
         else if (!kierunek && !this.oczekiwanie[0]) {
             setOczekiwanie(true , false);
-            for (Winda w : windy) {
-                w.action(-1,this.numer);
-            }
+            budynek.InformElevators((byte)-1,this.numer);
         }
 
 
@@ -177,7 +173,7 @@ public class Pietro extends Urzadzenie implements Runnable {
         }
     }
 
-    public Pietro(String nazwa, int numer) {
+    public Pietro(String nazwa, int numer, Budynek budynek) {
         super(nazwa);
         this.oczekiwanie = new boolean[]{false, false};
         this.numer = numer;
@@ -185,6 +181,7 @@ public class Pietro extends Urzadzenie implements Runnable {
         this.edytowanie = false;
         this.idZaparkowanejWindy = -1;
         this.czasoczekiwania = 0;
+        this.budynek = budynek;
     }
     @Override
     public void run() {

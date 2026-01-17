@@ -47,8 +47,6 @@ public class BudynekKontroler implements Listener {
         winda1 = new Winda(200,600,"Windeks",silnik);
         winda1.addListener(this);
         for (int i = 0; i < 4; i++) {
-            pietra.add(new Pietro("Pietro" + Integer.toString(i),i));
-            pietra.get(i).addWinda(winda1);
             Thread t1 = new Thread(pietra.get(i));
             t1.start();
         }
