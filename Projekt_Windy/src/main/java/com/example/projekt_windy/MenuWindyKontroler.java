@@ -62,6 +62,7 @@ public class MenuWindyKontroler {
 
         }
     }
+    //Test
 
     public void setMainController(BudynekKontroler budynekKontroler) {
         this.mainCotroler = budynekKontroler;
