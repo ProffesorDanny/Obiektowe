@@ -1,5 +1,6 @@
 package com.example.projekt_windy;
 
+import controlersClasses.src.Budynek;
 import controlersClasses.src.Winda;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +19,7 @@ public class MenuWindyKontroler {
     @FXML
     private Button closeMenu;
     private BudynekKontroler mainCotroler;
+    private Budynek budynek;
     private Winda przypisanaWinda;
 
 
@@ -51,12 +53,12 @@ public class MenuWindyKontroler {
 
     public void onOpenDoorClick(ActionEvent actionEvent) {
 
-            mainCotroler.pietra.get((int) przypisanaWinda.getWyskosc() / 5).interupt();
+            budynek.interuptionWindy(((int) przypisanaWinda.getWyskosc() / 5));
     }
 
     public void onCloseDoorClick(ActionEvent actionEvent) {
         try {
-            mainCotroler.pietra.get((int) przypisanaWinda.getWyskosc() / 5).resume();
+            budynek.resumeWindy(((int) przypisanaWinda.getWyskosc() / 5));
         }
         catch (IndexOutOfBoundsException e) {
 
@@ -68,6 +70,10 @@ public class MenuWindyKontroler {
         this.mainCotroler = budynekKontroler;
     }
 
+    public void setBudynek(Budynek  budynek) {
+        this.budynek = budynek;
+    }
+
     public void onCloseMenuClick(ActionEvent actionEvent) {
         Stage stage = (Stage) closeMenu.getScene().getWindow();
         stage.close();
@@ -76,7 +82,7 @@ public class MenuWindyKontroler {
     public void onRightChangeButtonClick(ActionEvent actionEvent) {
         if (przypisanaWinda.getPredkosc() == 0)
         {   try {
-            mainCotroler.pietra.get((int)przypisanaWinda.getWyskosc()/5).ZaladunekTowaru(false,przypisanaWinda.getId()-1,Integer.parseInt(elevatorChangeCargoTextField.getText()));
+            budynek.zaladunek((int)przypisanaWinda.getWyskosc()/5,false,przypisanaWinda.getId()-1,Integer.parseInt(elevatorChangeCargoTextField.getText()));
             actualCargoTextField.setText(String.valueOf(przypisanaWinda.getObciazenie()-przypisanaWinda.getWaga_pod()));
         }
         catch (Exception e) {
@@ -89,7 +95,7 @@ public class MenuWindyKontroler {
     public void onLeftChangeButtonClick(ActionEvent actionEvent) {
         if (przypisanaWinda.getPredkosc() == 0)
         {   try {
-            mainCotroler.pietra.get((int)przypisanaWinda.getWyskosc()/5).ZaladunekTowaru(true,przypisanaWinda.getId()-1,Integer.parseInt(elevatorChangeCargoTextField.getText()));
+            budynek.zaladunek((int)przypisanaWinda.getWyskosc()/5,true,przypisanaWinda.getId()-1,Integer.parseInt(elevatorChangeCargoTextField.getText()));
             actualCargoTextField.setText(String.valueOf(przypisanaWinda.getObciazenie()-przypisanaWinda.getWaga_pod()));
         }
         catch (Exception e) {

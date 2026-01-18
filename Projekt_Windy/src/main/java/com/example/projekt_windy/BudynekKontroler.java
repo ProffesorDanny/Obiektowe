@@ -82,12 +82,15 @@ public class BudynekKontroler implements Listener {
     @Override
     public void action(Object... args)
     {
+        StanBudynku stanBudynku = budynek.getAktualnyStan();
         Platform.runLater(()->{
-            elevatorOne.setTranslateY(winda1.getWyskosc()*(-50));
+            for (int i=0 ; i < stanBudynku.wysokosci.size() ; i++) {
+                elevatorOne.setTranslateY(stanBudynku.wysokosci.get(i)*(-50));
+            }
 
         for (int i = 0 ; i<4;i++) {
-            elevatorText[i].setText(String.valueOf(pietra.get(i).getTowar()));
-            if (!pietra.get(i).getEdytowanie()) {
+            elevatorText[i].setText(String.valueOf(stanBudynku.towary.get(i)));
+            if (!stanBudynku.stany.get(i)) {
                 rightText[i].setText(String.valueOf(budynek.getTowarDoprzeniesieniaWindy(i)));
             }
         }
@@ -137,6 +140,7 @@ public class BudynekKontroler implements Listener {
         Parent root = loader.load();
         MenuWindyKontroler secondController = loader.getController();
         secondController.setMainController(this);
+        secondController.setBudynek(budynek);
         budynek.ustawWindeNaKontroler(1,secondController);
         secondController.setActualCargoTextField(budynek.podajRoznice(1));
 

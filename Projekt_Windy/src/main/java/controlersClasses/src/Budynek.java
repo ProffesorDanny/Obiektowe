@@ -64,12 +64,37 @@ public class Budynek {
         pietra.get(id).setTowardoprzeniesienia(towardoprzeniesienia);
     }
 
+    public void zaladunek(int numer,boolean kierunek,int id, int towar)
+    {
+        pietra.get(numer).ZaladunekTowaru(kierunek,towar,id);
+    }
+
     public int getTowarDoprzeniesieniaWindy(int id) {
         return pietra.get(id).getTowardoprzeniesienia();
     }
 
+    public void interuptionWindy(int id)
+    {
+        pietra.get(id).interupt();
+    }
+
+    public void resumeWindy(int id)
+    {
+        pietra.get(id).resume();
+    }
+
     public StanBudynku getAktualnyStan() {
-        return new StanBudynku();
+        ArrayList<Integer> towary = new ArrayList<>();
+        ArrayList<Double> windy = new ArrayList<>();
+        ArrayList<Boolean> stany = new ArrayList<>();
+        for (Winda w : this.windy) {
+            windy.add(w.getWyskosc());
+        }
+        for (Pietro p : this.pietra) {
+            towary.add(p.getTowar());
+            stany.add(p.getEdytowanie());
+        }
+        return new StanBudynku(towary,windy,stany);
     }
 
 
