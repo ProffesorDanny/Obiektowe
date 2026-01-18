@@ -38,9 +38,7 @@ public class BudynekKontroler implements Listener {
     private TextField[] rightText;
     private TextField[] elevatorText;
     private Silnik silnik;
-    private Winda winda1;
     private Budynek budynek;
-    ArrayList<Pietro> pietra = new ArrayList<>();
     public void initialize() {
         elevatorText = new TextField[] {elevatorParterPackegesTextField, elevatorFirstFloorPackagesTextField, elevatorSecondFloorPackegesTextField,elevatorThirdFloorPackegesTextField};
         rightText = new TextField[] {rightParterFloorPackegesTextField, rightFirstFloorPackagesTextField, rightSecondFloorPackegesTextField, rightThirdFloorPackegesTextField};
@@ -63,21 +61,21 @@ public class BudynekKontroler implements Listener {
                     if (Integer.parseInt(rightText[index].getText()) < 0) {
                         throw new NumberFormatException();
                     }
-                    pietra.get(index).setTowardoprzeniesienia(Integer.parseInt(rightText[index].getText()));
+                    budynek.setTowardoprzeniesieniaPietra(Integer.parseInt(rightText[index].getText()), index);
                     System.out.println("Cos");
                 } catch (NumberFormatException e) {
                     System.out.println("Nieprawidłowe dane");
-                    rightText[index].setText(String.valueOf(pietra.get(index).getTowardoprzeniesienia()));
+                    rightText[index].setText(String.valueOf(budynek.getTowarDoprzeniesieniaWindy(index)));
                 }
 
             });
             rightText[i].focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
                 if (!isNowFocused) {
-                    pietra.get(index).setEdytowanie(false);
+                    budynek.zmienEdytowaniePietra(false,index);
                 }
             });
             rightText[i].setOnMouseClicked(event -> {
-                pietra.get(index).setEdytowanie(true);
+                budynek.zmienEdytowaniePietra(true,index);
             });
         }
     }
@@ -90,7 +88,7 @@ public class BudynekKontroler implements Listener {
         for (int i = 0 ; i<4;i++) {
             elevatorText[i].setText(String.valueOf(pietra.get(i).getTowar()));
             if (!pietra.get(i).getEdytowanie()) {
-                rightText[i].setText(String.valueOf(pietra.get(i).getTowardoprzeniesienia()));
+                rightText[i].setText(String.valueOf(budynek.getTowarDoprzeniesieniaWindy(i)));
             }
         }
 
@@ -100,29 +98,29 @@ public class BudynekKontroler implements Listener {
     }
 
     public void onThirdFloorUpButtonClick(ActionEvent actionEvent) {
-        pietra.get(3).PrzywolajWinde(true);
+        budynek.przywolajWinde(true,3);
     }
 
     public void onThirdFloorDownButtonClick(ActionEvent actionEvent) {
-        pietra.get(3).PrzywolajWinde(false);
+        budynek.przywolajWinde(false,3);
     }
 
     public void onSecondFloorUpButtonClick(ActionEvent actionEvent) {
 
-        pietra.get(2).PrzywolajWinde(true);
+        budynek.przywolajWinde(true,2);
     }
 
     public void onSecondFloorDownButtonClick(ActionEvent actionEvent) {
-        pietra.get(2).PrzywolajWinde(false);
+        budynek.przywolajWinde(false,2);
     }
 
     public void onFirstFloorUpButtonClick(ActionEvent actionEvent) {
-        pietra.get(1).PrzywolajWinde(true);
+        budynek.przywolajWinde(true,1);
     }
 
     public void onFirstFloorDownButtonClick(ActionEvent actionEvent) {
 
-        pietra.get(1).PrzywolajWinde(false);
+        budynek.przywolajWinde(false,1);
     }
 
     public void onParterDownButtonClick(ActionEvent actionEvent) {
@@ -130,7 +128,7 @@ public class BudynekKontroler implements Listener {
     }
 
     public void onParterUpButtonClick(ActionEvent actionEvent) {
-        pietra.get(0).PrzywolajWinde(true);
+        budynek.przywolajWinde(true,0);
     }
 
     public void onFirstElevatorMenuClick(ActionEvent actionEvent) throws IOException {
@@ -139,9 +137,8 @@ public class BudynekKontroler implements Listener {
         Parent root = loader.load();
         MenuWindyKontroler secondController = loader.getController();
         secondController.setMainController(this);
-        secondController.setPrzypisanaWinda(winda1);
-        secondController.setElevatorNumber(winda1.getId());
-        secondController.setActualCargoTextField(winda1.getObciazenie()-winda1.getWaga_pod());
+        budynek.ustawWindeNaKontroler(1,secondController);
+        secondController.setActualCargoTextField(budynek.podajRoznice(1));
 
         stage.setScene(new Scene(root));
         stage.setTitle("MenuWindy");
@@ -149,35 +146,35 @@ public class BudynekKontroler implements Listener {
     }
 
     public void onFirstFloorRightMoveButtonClick(ActionEvent actionEvent) {
-        pietra.get(1).setKierunekZaladunku(false);
+        budynek.setKierunekZaladunkuPietra(false,1);
     }
 
     public void onFirstFloorLeftMoveButtonClick(ActionEvent actionEvent) {
-        pietra.get(1).setKierunekZaladunku(true);
+        budynek.setKierunekZaladunkuPietra(true,1);
     }
 
 
     public void onParterFloorLeftMoveButtonClick(ActionEvent actionEvent) {
-        pietra.get(0).setKierunekZaladunku(true);
+        budynek.setKierunekZaladunkuPietra(true,0);
     }
 
     public void onParterFloorRightMoveButtonClick(ActionEvent actionEvent) {
-        pietra.get(0).setKierunekZaladunku(false);
+        budynek.setKierunekZaladunkuPietra(false,0);
     }
 
     public void onSecondFloorRightMoveButtonClick(ActionEvent actionEvent) {
-        pietra.get(2).setKierunekZaladunku(false);
+        budynek.setKierunekZaladunkuPietra(false,2);
     }
 
     public void onSecondFloorLeftMoveButtonClick(ActionEvent actionEvent) {
-        pietra.get(2).setKierunekZaladunku(true);
+        budynek.setKierunekZaladunkuPietra(true,2);
     }
 
     public void onThirdFloorLeftMoveButtonClick(ActionEvent actionEvent) {
-        pietra.get(3).setKierunekZaladunku(true);
+        budynek.setKierunekZaladunkuPietra(true,3);
     }
 
     public void onThirdFloorRightMoveButtonClick(ActionEvent actionEvent) {
-        pietra.get(3).setKierunekZaladunku(false);
+        budynek.setKierunekZaladunkuPietra(false,3);
     }
 }

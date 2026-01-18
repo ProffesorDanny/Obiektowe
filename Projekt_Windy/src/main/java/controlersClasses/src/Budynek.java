@@ -1,5 +1,7 @@
 package controlersClasses.src;
 
+import com.example.projekt_windy.MenuWindyKontroler;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -16,16 +18,16 @@ public class Budynek {
     public void dodajObciarzenie(int obciazenie,int id)
     {   if(obciazenie==0)
         {
-            windy.get(id).setObciazenie(windy.get(id).getWaga_pod());
+            windy.get(id-1).setObciazenie(windy.get(id-1).getWaga_pod());
         }
         else {
-        windy.get(id).setObciazenie(windy.get(id).getObciazenie() + obciazenie);
+        windy.get(id-1).setObciazenie(windy.get(id-1).getObciazenie() + obciazenie);
         }
     }
 
     public int podajRoznice(int id)
     {
-       return windy.get(id).getObciazenie()-windy.get(id).getWaga_pod();
+       return windy.get(id-1).getObciazenie()-windy.get(id-1).getWaga_pod();
     }
 
     public void uruchomWinde(int id)
@@ -41,7 +43,39 @@ public class Budynek {
 
     public boolean czyWindaPusta(int obciazenie,int id)
     {
-        return windy.get(id).getObciazenie() - obciazenie < windy.get(id).getWaga_pod();
+        return windy.get(id-1).getObciazenie() - obciazenie < windy.get(id-1).getWaga_pod();
+    }
+
+    public void przywolajWinde(boolean kierunek,int id)
+    {
+        pietra.get(id).PrzywolajWinde(kierunek);
+    }
+
+    public void setKierunekZaladunkuPietra(boolean kierunek, int id)
+    {
+        pietra.get(id).setKierunekZaladunku(kierunek);
+    }
+
+    public void zmienEdytowaniePietra(boolean edycja, int id) {
+        pietra.get(id).setEdytowanie(edycja);
+    }
+
+    public void setTowardoprzeniesieniaPietra(int towardoprzeniesienia, int id) {
+        pietra.get(id).setTowardoprzeniesienia(towardoprzeniesienia);
+    }
+
+    public int getTowarDoprzeniesieniaWindy(int id) {
+        return pietra.get(id).getTowardoprzeniesienia();
+    }
+
+    public StanBudynku getAktualnyStan() {
+        return new StanBudynku();
+    }
+
+
+    public void ustawWindeNaKontroler(int id, MenuWindyKontroler secondController) {
+        secondController.setPrzypisanaWinda(windy.get(id-1));
+        secondController.setElevatorNumber(windy.get(id-1).getId());
     }
 
     public Budynek(int iloscWind, int iloscPieter, Listener kontroler){
