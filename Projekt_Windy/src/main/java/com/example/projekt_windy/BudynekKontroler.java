@@ -39,21 +39,23 @@ public class BudynekKontroler implements Listener {
     private TextField[] elevatorText;
     private Silnik silnik;
     private Winda winda1;
+    private Budynek budynek;
     ArrayList<Pietro> pietra = new ArrayList<>();
     public void initialize() {
         elevatorText = new TextField[] {elevatorParterPackegesTextField, elevatorFirstFloorPackagesTextField, elevatorSecondFloorPackegesTextField,elevatorThirdFloorPackegesTextField};
         rightText = new TextField[] {rightParterFloorPackegesTextField, rightFirstFloorPackagesTextField, rightSecondFloorPackegesTextField, rightThirdFloorPackegesTextField};
-        silnik = new Silnik(80,1000,"Silneks",10);
-        winda1 = new Winda(200,600,"Windeks",silnik);
-        winda1.addListener(this);
-        for (int i = 0; i < 4; i++) {
-            Thread t1 = new Thread(pietra.get(i));
-            t1.start();
-        }
-        Thread t = new Thread(winda1);
-        winda1.setThread(t);
-        winda1.setPietra(this.pietra);
-        t.start();
+        budynek = new Budynek(1,4,this);
+        //silnik = new Silnik(80,1000,"Silneks",10);
+        //winda1 = new Winda(200,600,"Windeks",silnik);
+        //winda1.addListener(this);
+       // for (int i = 0; i < 4; i++) {
+            //Thread t1 = new Thread(pietra.get(i));
+            //t1.start();
+        //}
+        //Thread t = new Thread(winda1);
+        //winda1.setThread(t);
+        //winda1.setPietra(this.pietra);
+        //t.start();
         for (int i = 0; i < 4; i++) {
             final int index = i;
             rightText[i].setOnAction(event -> {

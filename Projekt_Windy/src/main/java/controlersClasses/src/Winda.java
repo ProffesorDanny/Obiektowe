@@ -16,7 +16,7 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
     private List<Boolean> zadania = new ArrayList<>();
     private List<Boolean> cele = new ArrayList();
     private List<Listener> kontrolery = new ArrayList<>();
-    ArrayList<Pietro> pietra;
+    private Budynek budynek;
     private volatile Thread t;
 
     public double getWyskosc() {
@@ -37,10 +37,6 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
 
     public void setThread(Thread t) {
         this.t = t;
-    }
-
-    public void setPietra(ArrayList<Pietro> pietra) {
-        this.pietra = pietra;
     }
 
     public void jedz(boolean kierunek,double destynacja, double odstep) throws Exception {
@@ -71,9 +67,7 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
 
     }
     public synchronized void PodfierdzWykonanie() {
-        pietra.get((int)(this.wyskosc/5)).PodfierdzDojazd(true,id);
-        pietra.get((int)(this.wyskosc/5)).PodfierdzDojazd(false,id);
-        pietra.get((int)(this.wyskosc/5)).setIdZaparkowanejWindy(this.id);
+        budynek.przekazPotwierdzenieDojazdu(this.id, wyskosc);
         przyjeteZadaniaWindy.set((int)(wyskosc/5),-1);
         przyjeteZadaniaOd.set((int)(wyskosc/5),0d);
     }
@@ -199,9 +193,10 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
     }
 
 
-    public Winda(int waga_pod, int obciazenie_max, String nazwa, Silnik silnik) {
+    public Winda(int waga_pod, int obciazenie_max, String nazwa, Silnik silnik, Budynek budynek) {
         super(waga_pod, obciazenie_max, nazwa);
         this.silnik = silnik;
+        this.budynek = budynek;
         if(freeId == 0)
         {
             for (int i = 0; i < 4; i++) {
