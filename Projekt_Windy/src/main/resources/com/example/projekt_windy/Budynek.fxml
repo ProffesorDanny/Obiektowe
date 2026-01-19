@@ -58,7 +58,7 @@
                                                             <Image url="@Paczki.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <TextField fx:id="elevatorThirdFloorPackegesTextField" alignment="CENTER" layoutX="135.0" layoutY="104.0" prefHeight="26.0" prefWidth="72.0" text="0" />
+                                                      <TextField fx:id="elevatorThirdFloorPackegesTextField" alignment="CENTER" editable="false" layoutX="135.0" layoutY="104.0" prefHeight="26.0" prefWidth="72.0" text="0" />
                                                       <ImageView fitHeight="103.0" fitWidth="148.0" layoutX="1500.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
                                                             <Image url="@Paczki.png" />
@@ -79,7 +79,7 @@
                                                             <Image url="@Paczki.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <TextField fx:id="elevatorSecondFloorPackegesTextField" alignment="CENTER" layoutX="141.0" layoutY="110.0" prefHeight="26.0" prefWidth="72.0" text="0" />
+                                                      <TextField fx:id="elevatorSecondFloorPackegesTextField" alignment="CENTER" editable="false" layoutX="141.0" layoutY="110.0" prefHeight="26.0" prefWidth="72.0" text="0" />
                                                       <ImageView fitHeight="103.0" fitWidth="142.0" layoutX="1503.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
                                                             <Image url="@Paczki.png" />
@@ -107,7 +107,7 @@
                                                             <Image url="@Paczki.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <TextField fx:id="elevatorFirstFloorPackagesTextField" alignment="CENTER" layoutX="138.0" layoutY="104.0" prefHeight="26.0" prefWidth="72.0" text="0" />
+                                                      <TextField fx:id="elevatorFirstFloorPackagesTextField" alignment="CENTER" editable="false" layoutX="138.0" layoutY="104.0" prefHeight="26.0" prefWidth="72.0" text="0" />
                                                       <ImageView fitHeight="103.0" fitWidth="142.0" layoutX="1507.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
                                                             <Image url="@Paczki.png" />
@@ -127,7 +127,7 @@
                                                             <Image url="@Paczki.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <TextField fx:id="elevatorParterPackegesTextField" alignment="CENTER" layoutX="144.0" layoutY="91.0" prefHeight="26.0" prefWidth="72.0" text="0" />
+                                                      <TextField fx:id="elevatorParterPackegesTextField" alignment="CENTER" editable="false" layoutX="144.0" layoutY="91.0" prefHeight="26.0" prefWidth="72.0" text="0" />
                                                       <ImageView fitHeight="103.0" fitWidth="142.0" layoutX="1506.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
                                                             <Image url="@Paczki.png" />

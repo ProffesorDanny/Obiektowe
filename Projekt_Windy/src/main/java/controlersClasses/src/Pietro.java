@@ -1,5 +1,7 @@
 package controlersClasses.src;
 
+import javafx.application.Platform;
+
 import java.util.ArrayList;
 
 public class Pietro extends Urzadzenie implements Runnable {
@@ -69,7 +71,7 @@ public class Pietro extends Urzadzenie implements Runnable {
         {
             throw new NumberFormatException();
         }
-        else if (towar==0)
+        else if (this.towar==0)
         {
             return;
         }
@@ -156,11 +158,17 @@ public class Pietro extends Urzadzenie implements Runnable {
     public void PrzywolajWinde(boolean kierunek) {
         if (kierunek && !this.oczekiwanie[1]) {
             setOczekiwanie(true , true);
+            setOczekiwanie(false , false);
             budynek.InformElevators((byte)1,this.numer);
         }
         else if (!kierunek && !this.oczekiwanie[0]) {
             setOczekiwanie(true , false);
+            setOczekiwanie(false , true);
             budynek.InformElevators((byte)-1,this.numer);
+        }
+        else  {
+            setOczekiwanie(false , kierunek);
+            budynek.InformElevators(this.numer);
         }
 
 

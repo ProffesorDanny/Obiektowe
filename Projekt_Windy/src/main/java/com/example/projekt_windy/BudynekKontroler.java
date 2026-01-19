@@ -43,17 +43,6 @@ public class BudynekKontroler implements Listener {
         elevatorText = new TextField[] {elevatorParterPackegesTextField, elevatorFirstFloorPackagesTextField, elevatorSecondFloorPackegesTextField,elevatorThirdFloorPackegesTextField};
         rightText = new TextField[] {rightParterFloorPackegesTextField, rightFirstFloorPackagesTextField, rightSecondFloorPackegesTextField, rightThirdFloorPackegesTextField};
         budynek = new Budynek(1,4,this);
-        //silnik = new Silnik(80,1000,"Silneks",10);
-        //winda1 = new Winda(200,600,"Windeks",silnik);
-        //winda1.addListener(this);
-       // for (int i = 0; i < 4; i++) {
-            //Thread t1 = new Thread(pietra.get(i));
-            //t1.start();
-        //}
-        //Thread t = new Thread(winda1);
-        //winda1.setThread(t);
-        //winda1.setPietra(this.pietra);
-        //t.start();
         for (int i = 0; i < 4; i++) {
             final int index = i;
             rightText[i].setOnAction(event -> {
@@ -139,10 +128,10 @@ public class BudynekKontroler implements Listener {
         Stage stage = new Stage();
         Parent root = loader.load();
         MenuWindyKontroler secondController = loader.getController();
-        secondController.setMainController(this);
         secondController.setBudynek(budynek);
         budynek.ustawWindeNaKontroler(1,secondController);
         secondController.setActualCargoTextField(budynek.podajRoznice(1));
+        secondController.setPrzypisanaWindaKontroler();
 
         stage.setScene(new Scene(root));
         stage.setTitle("MenuWindy");

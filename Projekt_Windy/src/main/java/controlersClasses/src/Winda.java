@@ -1,9 +1,14 @@
 package controlersClasses.src;
 
+import com.example.projekt_windy.MenuWindyKontroler;
+import javafx.application.Platform;
+import javafx.scene.image.Image;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Winda extends Urzadzenie implements Listener, Runnable {
+public class Winda extends Urzadzenie implements Runnable {
     static private ArrayList<Double> przyjeteZadaniaOd = new ArrayList<>();
     static private ArrayList<Integer> przyjeteZadaniaWindy = new ArrayList<>();
     static private int freeId = 0;
@@ -16,6 +21,7 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
     private List<Boolean> zadania = new ArrayList<>();
     private List<Boolean> cele = new ArrayList();
     private List<Listener> kontrolery = new ArrayList<>();
+    private MenuWindyKontroler windyKontroler;
     private Budynek budynek;
     private volatile Thread t;
 
@@ -37,6 +43,10 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
 
     public void setThread(Thread t) {
         this.t = t;
+    }
+
+   public void setMenuWindyKontroler(MenuWindyKontroler windyKontroler) {
+        this.windyKontroler = windyKontroler;
     }
 
     public void jedz(boolean kierunek,double destynacja, double odstep) throws Exception {
@@ -80,16 +90,22 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
     public void uruchom()
     {
         this.silnik.uruchom();
+        if (windyKontroler != null) {
+            Platform.runLater(()->{windyKontroler.zmienObraz(new Image(windyKontroler.getClass().getResource("ZamknieteDrzwi.png").toExternalForm()));});
+        }
     }
     public void zatrzymaj()
     {
         this.silnik.zatrzymaj();
+        if (windyKontroler != null) {
+            Platform.runLater(()->{windyKontroler.zmienObraz(new Image(windyKontroler.getClass().getResource("OtwarteDrzwi.png").toExternalForm()));});
+        }
     }
 
-    public void action(Object... args) {
-        int pietro = ((Number) args[1]).intValue();
-        byte kierunek = ((Number) args[0]).byteValue();
-        this.elekcja(pietro,kierunek);
+    public synchronized void anulujZadanie(int pietro)
+    {
+        przyjeteZadaniaWindy.set(pietro,-1);
+        przyjeteZadaniaOd.set(pietro,0d);
     }
 
     public synchronized void elekcja(int pietro, byte kierunek) {

@@ -12,7 +12,14 @@ public class Budynek {
     public void InformElevators(byte kierunek,int id)
     {
         for (Winda w : windy) {
-            w.action(kierunek,id);
+            w.anulujZadanie(id);
+            w.elekcja(id,kierunek);
+        }
+    }
+    public void InformElevators(int id)
+    {
+        for (Winda w : windy) {
+            w.anulujZadanie(id);
         }
     }
     public void dodajObciarzenie(int id,int obciazenie)
@@ -104,6 +111,7 @@ public class Budynek {
     public void ustawWindeNaKontroler(int id, MenuWindyKontroler secondController) {
         secondController.setPrzypisanaWinda(windy.get(id-1));
         secondController.setElevatorNumber(windy.get(id-1).getId());
+        secondController.zmienObraz(windy.get(id-1).getPredkosc() == 0);
     }
 
     public Budynek(int iloscWind, int iloscPieter, Listener kontroler){

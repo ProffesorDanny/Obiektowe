@@ -7,9 +7,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class MenuWindyKontroler {
+    @FXML
+    private ImageView doorImage;
     @FXML
     private TextField actualCargoTextField;
     @FXML
@@ -18,7 +22,6 @@ public class MenuWindyKontroler {
     private Label elevatorNumber;
     @FXML
     private Button closeMenu;
-    private BudynekKontroler mainCotroler;
     private Budynek budynek;
     private Winda przypisanaWinda;
 
@@ -35,6 +38,9 @@ public class MenuWindyKontroler {
         this.actualCargoTextField.setText(String.valueOf(waga));
     }
 
+    public void setPrzypisanaWindaKontroler() {
+        przypisanaWinda.setMenuWindyKontroler(this);
+    }
     public void onThirdFloorSelectClick(ActionEvent actionEvent) {
         przypisanaWinda.setNewTarget(3,true);
     }
@@ -54,27 +60,41 @@ public class MenuWindyKontroler {
     public void onOpenDoorClick(ActionEvent actionEvent) {
 
             budynek.interuptionWindy(przypisanaWinda.getWyskosc(),przypisanaWinda.getId());
+            zmienObraz(true);
     }
 
     public void onCloseDoorClick(ActionEvent actionEvent) {
         try {
             budynek.resumeWindy(((int) przypisanaWinda.getWyskosc() / 5));
+            zmienObraz(false);
         }
         catch (IndexOutOfBoundsException e) {
 
         }
     }
-    //Test
 
-    public void setMainController(BudynekKontroler budynekKontroler) {
-        this.mainCotroler = budynekKontroler;
+    public void zmienObraz(boolean typ) {
+        Image carImage;
+        if (typ) {
+            doorImage.setImage( new Image(getClass().getResource("OtwarteDrzwi.png").toExternalForm()) );
+        }
+        else {
+            doorImage.setImage( new Image(getClass().getResource("ZamknieteDrzwi.png").toExternalForm()) );
+        }
+
     }
+
+    public void zmienObraz(Image carImage) {
+        doorImage.setImage(carImage);
+    }
+
 
     public void setBudynek(Budynek  budynek) {
         this.budynek = budynek;
     }
 
     public void onCloseMenuClick(ActionEvent actionEvent) {
+        przypisanaWinda.setMenuWindyKontroler(null);
         Stage stage = (Stage) closeMenu.getScene().getWindow();
         stage.close();
     }
