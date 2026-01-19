@@ -58,7 +58,7 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
         }
         else {
             wyskosc = destynacja;
-            this.silnik.zatrzymaj();
+            zatrzymaj();
             this.predkosc = 0;
             this.PodfierdzWykonanie();
             this.setNewTarget((int)(this.wyskosc/5),false);
@@ -80,6 +80,10 @@ public class Winda extends Urzadzenie implements Listener, Runnable {
     public void uruchom()
     {
         this.silnik.uruchom();
+    }
+    public void zatrzymaj()
+    {
+        this.silnik.zatrzymaj();
     }
 
     public void action(Object... args) {

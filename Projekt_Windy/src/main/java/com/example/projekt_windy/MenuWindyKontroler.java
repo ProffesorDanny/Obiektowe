@@ -53,7 +53,7 @@ public class MenuWindyKontroler {
 
     public void onOpenDoorClick(ActionEvent actionEvent) {
 
-            budynek.interuptionWindy(((int) przypisanaWinda.getWyskosc() / 5));
+            budynek.interuptionWindy(przypisanaWinda.getWyskosc(),przypisanaWinda.getId());
     }
 
     public void onCloseDoorClick(ActionEvent actionEvent) {

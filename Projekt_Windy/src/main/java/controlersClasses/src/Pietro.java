@@ -75,7 +75,7 @@ public class Pietro extends Urzadzenie implements Runnable {
         }
         if (kierunek) {
             if (this.towar - towar <= 0) {
-                budynek.dodajObciarzenie(this.towar, id);
+                budynek.dodajObciarzenie(id, this.towar);
                 this.towar = 0;
 
             }
@@ -87,11 +87,11 @@ public class Pietro extends Urzadzenie implements Runnable {
         else {
             if (budynek.czyWindaPusta(id, towar)) {
                 this.towar += budynek.podajRoznice(id);
-                budynek.dodajObciarzenie(0, id);
+                budynek.dodajObciarzenie(id, 0);
             }
             else {
                 this.towar += towar;
-                budynek.dodajObciarzenie(-towar, id);
+                budynek.dodajObciarzenie(id, -towar);
             }
 
         }
@@ -124,11 +124,11 @@ public class Pietro extends Urzadzenie implements Runnable {
 
     public void PodfierdzDojazd(boolean kierunek,int id)
     {
-        if (kierunek && !this.oczekiwanie[1]) {
+        if (kierunek && this.oczekiwanie[1]) {
             setOczekiwanie(false , true);
 
         }
-        else if (!kierunek && !this.oczekiwanie[0]) {
+        else if (!kierunek && this.oczekiwanie[0]) {
             setOczekiwanie(false , false);
         }
         idZaparkowanejWindy = id;
@@ -145,11 +145,11 @@ public class Pietro extends Urzadzenie implements Runnable {
         idZaparkowanejWindy = -1;
     }
 
-    public void interupt()
+
+    public void interupt(int idwindy)
     {
-        if (idZaparkowanejWindy != -1) {
-            czasoczekiwania = 0;
-        }
+        czasoczekiwania = 0;
+        idZaparkowanejWindy = idwindy;
     }
 
 

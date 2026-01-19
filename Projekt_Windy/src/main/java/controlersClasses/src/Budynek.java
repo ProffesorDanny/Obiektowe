@@ -15,13 +15,13 @@ public class Budynek {
             w.action(kierunek,id);
         }
     }
-    public void dodajObciarzenie(int obciazenie,int id)
+    public void dodajObciarzenie(int id,int obciazenie)
     {   if(obciazenie==0)
         {
-            windy.get(id-1).setObciazenie(windy.get(id-1).getWaga_pod());
+            windy.get(id).setObciazenie(windy.get(id).getWaga_pod());
         }
         else {
-        windy.get(id-1).setObciazenie(windy.get(id-1).getObciazenie() + obciazenie);
+        windy.get(id).setObciazenie(windy.get(id).getObciazenie() + obciazenie);
         }
     }
 
@@ -41,9 +41,9 @@ public class Budynek {
         pietra.get((int)(wysokosc/5)).setIdZaparkowanejWindy(id);
     }
 
-    public boolean czyWindaPusta(int obciazenie,int id)
+    public boolean czyWindaPusta(int id,int obciazenie)
     {
-        return windy.get(id-1).getObciazenie() - obciazenie < windy.get(id-1).getWaga_pod();
+        return windy.get(id).getObciazenie() - obciazenie < windy.get(id).getWaga_pod();
     }
 
     public void przywolajWinde(boolean kierunek,int id)
@@ -66,16 +66,19 @@ public class Budynek {
 
     public void zaladunek(int numer,boolean kierunek,int id, int towar)
     {
-        pietra.get(numer).ZaladunekTowaru(kierunek,towar,id);
+        pietra.get(numer).ZaladunekTowaru(kierunek,id,towar);
     }
 
     public int getTowarDoprzeniesieniaWindy(int id) {
         return pietra.get(id).getTowardoprzeniesienia();
     }
 
-    public void interuptionWindy(int id)
+    public void interuptionWindy(double wysokosc, int idwindy)
     {
-        pietra.get(id).interupt();
+        if (wysokosc%1 == 0) {
+            pietra.get((int) (wysokosc / 5)).interupt(idwindy);
+            windy.get(idwindy-1).zatrzymaj();
+        }
     }
 
     public void resumeWindy(int id)
