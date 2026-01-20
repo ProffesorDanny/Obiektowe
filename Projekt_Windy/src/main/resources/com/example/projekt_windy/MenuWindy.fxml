@@ -34,5 +34,9 @@
             <Image url="@OtwarteDrzwi.png" />
          </image>
       </ImageView>
+      <Label fx:id="elevatorName" alignment="CENTER" layoutX="112.0" layoutY="85.0" text="Default">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
    </children>
 </AnchorPane>

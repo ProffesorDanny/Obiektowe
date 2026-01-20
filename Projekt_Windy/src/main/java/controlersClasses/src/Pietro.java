@@ -61,15 +61,10 @@ public class Pietro extends Urzadzenie implements Runnable {
         this.idZaparkowanejWindy = idZaparkowanejWindy;
     }
 
-    public void addListener(Listener l) {
-        kontrolery.add(l);
-    }
-
-
-    public void ZaladunekTowaru(boolean kierunek,int id, int towar) throws NumberFormatException {
+    public void ZaladunekTowaru(boolean kierunek,int id, int towar) throws DataFailureException {
         if (towar<0)
         {
-            throw new NumberFormatException();
+            throw new DataFailureException();
         }
         else if (this.towar==0)
         {

@@ -11,16 +11,14 @@ public class Budynek {
 
     public void InformElevators(byte kierunek,int id)
     {
+        Winda.anulujZadanie(id);
         for (Winda w : windy) {
-            w.anulujZadanie(id);
             w.elekcja(id,kierunek);
         }
     }
     public void InformElevators(int id)
     {
-        for (Winda w : windy) {
-            w.anulujZadanie(id);
-        }
+        Winda.anulujZadanie(id);
     }
     public void dodajObciarzenie(int id,int obciazenie)
     {   if(obciazenie==0)
@@ -71,8 +69,12 @@ public class Budynek {
         pietra.get(id).setTowardoprzeniesienia(towardoprzeniesienia);
     }
 
-    public void zaladunek(int numer,boolean kierunek,int id, int towar)
+    public void zaladunek(int numer,boolean kierunek,int id, int towar) throws OpenException
     {
+        if (!windy.get(id).isOtwarteDrzwi())
+        {
+            throw new OpenException();
+        }
         pietra.get(numer).ZaladunekTowaru(kierunek,id,towar);
     }
 
@@ -115,18 +117,18 @@ public class Budynek {
     }
 
     public Budynek(int iloscWind, int iloscPieter, Listener kontroler){
+        for(int i = 0; i < iloscPieter; i++){
+            pietra.add(new Pietro("Pietro"+ String.valueOf(i),i,this));
+            Thread t1 = new Thread(pietra.get(i));
+            t1.start();
+        }
             for(int i = 0; i < iloscWind; i++){
                 Silnik silnik = new Silnik(80, 1000, "Silneks", 10);
                 windy.add(new Winda(200,600,"Windeks", silnik,this));
                 windy.get(i).addListener(kontroler);
                 Thread t = new Thread(windy.get(i));
-                windy.get(i).setThread(t);
                 t.start();
             }
-            for(int i = 0; i < iloscPieter; i++){
-                pietra.add(new Pietro("Pietro"+ String.valueOf(i),i,this));
-                Thread t1 = new Thread(pietra.get(i));
-                t1.start();
-            }
+
     }
 }

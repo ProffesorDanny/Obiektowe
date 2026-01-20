@@ -1,6 +1,8 @@
 package com.example.projekt_windy;
 
 import controlersClasses.src.Budynek;
+import controlersClasses.src.DataFailureException;
+import controlersClasses.src.OpenException;
 import controlersClasses.src.Winda;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class MenuWindyKontroler {
+    @FXML
+    private Label elevatorName;
     @FXML
     private ImageView doorImage;
     @FXML
@@ -25,6 +29,11 @@ public class MenuWindyKontroler {
     private Budynek budynek;
     private Winda przypisanaWinda;
 
+    public void afterInitialize(){
+        przypisanaWinda.setMenuWindyKontroler(this);
+        this.actualCargoTextField.setText(String.valueOf(przypisanaWinda.getObciazenie()-przypisanaWinda.getWaga_pod()));
+        elevatorName.setText(przypisanaWinda.getNazwa());
+    }
 
     public void setPrzypisanaWinda(Winda przypisanaWinda) {
         this.przypisanaWinda = przypisanaWinda;
@@ -34,13 +43,6 @@ public class MenuWindyKontroler {
         this.elevatorNumber.setText(String.valueOf(id));
     }
 
-    public void setActualCargoTextField(int waga) {
-        this.actualCargoTextField.setText(String.valueOf(waga));
-    }
-
-    public void setPrzypisanaWindaKontroler() {
-        przypisanaWinda.setMenuWindyKontroler(this);
-    }
     public void onThirdFloorSelectClick(ActionEvent actionEvent) {
         przypisanaWinda.setNewTarget(3,true);
     }
@@ -61,12 +63,14 @@ public class MenuWindyKontroler {
 
             budynek.interuptionWindy(przypisanaWinda.getWyskosc(),przypisanaWinda.getId());
             zmienObraz(true);
+            przypisanaWinda.setOtwarteDrzwi(true);
     }
 
     public void onCloseDoorClick(ActionEvent actionEvent) {
         try {
             budynek.resumeWindy(((int) przypisanaWinda.getWyskosc() / 5));
             zmienObraz(false);
+            przypisanaWinda.setOtwarteDrzwi(false);
         }
         catch (IndexOutOfBoundsException e) {
 
@@ -105,9 +109,7 @@ public class MenuWindyKontroler {
             budynek.zaladunek((int)przypisanaWinda.getWyskosc()/5,false,przypisanaWinda.getId()-1,Integer.parseInt(elevatorChangeCargoTextField.getText()));
             actualCargoTextField.setText(String.valueOf(przypisanaWinda.getObciazenie()-przypisanaWinda.getWaga_pod()));
         }
-        catch (Exception e) {
-            System.out.println("Nieprawidłowe dane");
-        }
+        catch (DataFailureException | OpenException _) {}
 
         }
     }
@@ -118,9 +120,7 @@ public class MenuWindyKontroler {
             budynek.zaladunek((int)przypisanaWinda.getWyskosc()/5,true,przypisanaWinda.getId()-1,Integer.parseInt(elevatorChangeCargoTextField.getText()));
             actualCargoTextField.setText(String.valueOf(przypisanaWinda.getObciazenie()-przypisanaWinda.getWaga_pod()));
         }
-        catch (Exception e) {
-            System.out.println("Nieprawidłowe dane");
-        }
+        catch (DataFailureException | OpenException _) {}
 
         }
     }

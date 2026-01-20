@@ -93,7 +93,7 @@ public class BudynekKontroler implements Listener {
     }
 
     public void onThirdFloorUpButtonClick(ActionEvent actionEvent) {
-        budynek.przywolajWinde(true,3);
+       // budynek.przywolajWinde(true,3);
     }
 
     public void onThirdFloorDownButtonClick(ActionEvent actionEvent) {
@@ -133,9 +133,20 @@ public class BudynekKontroler implements Listener {
         MenuWindyKontroler secondController = loader.getController();
         secondController.setBudynek(budynek);
         budynek.ustawWindeNaKontroler(1,secondController);
-        secondController.setActualCargoTextField(budynek.podajRoznice(1));
-        secondController.setPrzypisanaWindaKontroler();
+        secondController.afterInitialize();
+        stage.setScene(new Scene(root));
+        stage.setTitle("MenuWindy");
+        stage.show();
+    }
 
+    public void onSecondElevatorMenuClick(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuWindy.fxml"));
+        Stage stage = new Stage();
+        Parent root = loader.load();
+        MenuWindyKontroler secondController = loader.getController();
+        secondController.setBudynek(budynek);
+        budynek.ustawWindeNaKontroler(2,secondController);
+        secondController.afterInitialize();
         stage.setScene(new Scene(root));
         stage.setTitle("MenuWindy");
         stage.show();
@@ -173,4 +184,6 @@ public class BudynekKontroler implements Listener {
     public void onThirdFloorRightMoveButtonClick(ActionEvent actionEvent) {
         budynek.setKierunekZaladunkuPietra(false,3);
     }
+
+
 }

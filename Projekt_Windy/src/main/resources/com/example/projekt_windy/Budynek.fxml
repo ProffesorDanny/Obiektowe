@@ -10,7 +10,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" SplitPane.resizableWithParent="false">
                <children>
-                  <ImageView fitHeight="204.0" fitWidth="142.0" layoutY="756.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="elevatorTwo" fitHeight="204.0" fitWidth="142.0" layoutY="756.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@WindaPro.png" />
                      </image></ImageView>
@@ -46,7 +46,7 @@
                                                             </AnchorPane>
                                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="99.0" prefWidth="94.0">
                                                                <children>
-                                                                  <Button layoutX="8.0" layoutY="14.0" mnemonicParsing="false" text="W2" />
+                                                                  <Button fx:id="secondElevatorMenu" layoutX="8.0" layoutY="14.0" mnemonicParsing="false" onAction="#onSecondElevatorMenuClick" text="W2" />
                                                                </children>
                                                             </AnchorPane>
                                                         </items>

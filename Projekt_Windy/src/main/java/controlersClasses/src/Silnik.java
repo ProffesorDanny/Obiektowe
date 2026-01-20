@@ -5,10 +5,13 @@ public class Silnik extends Urzadzenie {
     private double obroty_obc;
     private boolean aktywnosc;
 
-    public double poruszaj(boolean kierunek, int aktualna_waga) throws  Exception{
-        if(this.getObciazenie_max()<this.getObciazenie() || !aktywnosc)
+    public double poruszaj(boolean kierunek, int aktualna_waga) throws MassException, ReadynessException {
+        if(this.getObciazenie_max()<this.getObciazenie())
         {
-            throw new Exception();
+            throw new MassException();
+        }
+        else if(!aktywnosc) {
+            throw new ReadynessException();
         }
         obroty_obc = kierunek ? obroty_pods/Math.log10(aktualna_waga) : -obroty_pods/Math.log10(aktualna_waga);
         return obroty_obc;

@@ -4,7 +4,6 @@ import com.example.projekt_windy.MenuWindyKontroler;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class Winda extends Urzadzenie implements Runnable {
     private List<Listener> kontrolery = new ArrayList<>();
     private MenuWindyKontroler windyKontroler;
     private Budynek budynek;
-    private volatile Thread t;
+    private boolean otwarteDrzwi;
 
     public double getWyskosc() {
         return wyskosc;
@@ -38,27 +37,23 @@ public class Winda extends Urzadzenie implements Runnable {
         return predkosc;
     }
 
-    public void interuption() {
-        t.interrupt();
-    }
-
-    public void setThread(Thread t) {
-        this.t = t;
+    public boolean isOtwarteDrzwi() {
+        return otwarteDrzwi;
     }
 
    public void setMenuWindyKontroler(MenuWindyKontroler windyKontroler) {
         this.windyKontroler = windyKontroler;
     }
 
-    public void jedz(boolean kierunek,double destynacja, double odstep) throws Exception {
+    public void setOtwarteDrzwi(boolean otwarteDrzwi) {
+        this.otwarteDrzwi = otwarteDrzwi;
+    }
+
+    public void jedz(boolean kierunek,double destynacja, double odstep) throws MassException, ReadynessException {
         if (this.getObciazenie() > this.getObciazenie_max()) {
-            throw new Exception();
+            throw new MassException();
         }
-        try {
-            predkosc = silnik.poruszaj(kierunek, this.getObciazenie());
-        } catch (Exception e) {
-            throw new Exception();
-        }
+        predkosc = silnik.poruszaj(kierunek, this.getObciazenie());
         if (predkosc > 0 && wyskosc + predkosc * odstep < destynacja) {
             wyskosc += predkosc * odstep;
             this.kierunek = 1;
@@ -78,23 +73,19 @@ public class Winda extends Urzadzenie implements Runnable {
 
     }
     public synchronized void PodfierdzWykonanie() {
-        if (przyjeteZadaniaOd.get((int)(wyskosc/5)) != 99) {
+        if (przyjeteZadaniaOd.get((int)(wyskosc/5)) != 99 || wyskosc/5==0 || (int)(wyskosc/5) == przyjeteZadaniaOd.size()-1) {
             budynek.przekazPotwierdzenieDojazdu(this.id, wyskosc);
             przyjeteZadaniaWindy.set((int) (wyskosc / 5), -1);
             przyjeteZadaniaOd.set((int) (wyskosc / 5), 0d);
         }
     }
 
-
-    public void zaladuj(int ladunek)
-    {
-        this.setObciazenie(ladunek);
-    }
     public void uruchom()
     {
         this.silnik.uruchom();
         if (windyKontroler != null) {
             Platform.runLater(()->{windyKontroler.zmienObraz(new Image(windyKontroler.getClass().getResource("ZamknieteDrzwi.png").toExternalForm()));});
+           otwarteDrzwi = false;
         }
     }
     public void zatrzymaj()
@@ -102,10 +93,11 @@ public class Winda extends Urzadzenie implements Runnable {
         this.silnik.zatrzymaj();
         if (windyKontroler != null) {
             Platform.runLater(()->{windyKontroler.zmienObraz(new Image(windyKontroler.getClass().getResource("OtwarteDrzwi.png").toExternalForm()));});
+            otwarteDrzwi = true;
         }
     }
 
-    public synchronized void anulujZadanie(int pietro)
+    public static synchronized void anulujZadanie(int pietro)
     {
         przyjeteZadaniaWindy.set(pietro,-1);
         przyjeteZadaniaOd.set(pietro,0d);
@@ -160,8 +152,12 @@ public class Winda extends Urzadzenie implements Runnable {
     }
 
     public void setNewTarget(int pietro, boolean typ)
-    {
-        this.cele.set(pietro,typ);
+    {   if (!this.cele.get(pietro)) {
+        this.cele.set(pietro, typ);
+        }
+        else  {
+            this.cele.set(pietro, false);
+        }
     }
 
 
@@ -187,7 +183,7 @@ public class Winda extends Urzadzenie implements Runnable {
                         }
 
                     }
-                    catch (Exception e) {
+                    catch (MassException | ReadynessException e) {
                         predkosc = 0;
                     }
                 }
@@ -196,22 +192,23 @@ public class Winda extends Urzadzenie implements Runnable {
                 try {
                     jedz((kierunek > 0), potencjalneZadanie * 5, 0.1);
                 }
-                catch (Exception e) {
+                catch (MassException | ReadynessException e) {
                     predkosc = 0;
                 }
             }
             if (!isQuestSelected) {
-                        reElekcja((byte) -this.kierunek);
+                        kierunek = (byte) (-kierunek);
+                        reElekcja((this.kierunek));
                 for (int i = (int)(wyskosc/5) ;i < this.zadania.size() && i>=0; i -= kierunek) {
                     if (zadania.get(i)) {
                         try {
                             isQuestSelected = true;
-                            kierunek = (byte) (-kierunek);
                             jedz((kierunek > 0), i * 5, 0.1);
                             break;
                         }
-                        catch (Exception e) {
+                        catch (MassException | ReadynessException e) {
                             predkosc = 0;
+                            System.out.println("za ciezko");
                         }
                     }
                 }
