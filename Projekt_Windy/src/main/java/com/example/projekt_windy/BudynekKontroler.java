@@ -40,13 +40,12 @@ public class BudynekKontroler implements Listener {
     private TextField[] rightText;
     private TextField[] elevatorText;
     private ImageView[] obrazyWind;
-    private Silnik silnik;
     private Budynek budynek;
     public void initialize() {
         elevatorText = new TextField[] {elevatorParterPackegesTextField, elevatorFirstFloorPackagesTextField, elevatorSecondFloorPackegesTextField,elevatorThirdFloorPackegesTextField};
         rightText = new TextField[] {rightParterFloorPackegesTextField, rightFirstFloorPackagesTextField, rightSecondFloorPackegesTextField, rightThirdFloorPackegesTextField};
         obrazyWind = new ImageView[] {elevatorOne, elevatorTwo};
-        budynek = new Budynek(1,4,this);
+        budynek = new Budynek(2,4,this);
         for (int i = 0; i < 4; i++) {
             final int index = i;
             rightText[i].setOnAction(event -> {
@@ -78,7 +77,7 @@ public class BudynekKontroler implements Listener {
         StanBudynku stanBudynku = budynek.getAktualnyStan();
         Platform.runLater(()->{
             for (int i=0 ; i < stanBudynku.wysokosci.size() ; i++) {
-                elevatorOne.setTranslateY(stanBudynku.wysokosci.get(i)*(-50));
+                obrazyWind[i].setTranslateY(stanBudynku.wysokosci.get(i)*(-50));
             }
 
         for (int i = 0 ; i<4;i++) {
