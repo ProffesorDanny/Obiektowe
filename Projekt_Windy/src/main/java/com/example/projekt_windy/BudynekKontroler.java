@@ -20,6 +20,8 @@ public class BudynekKontroler implements Listener {
     @FXML
     private ImageView elevatorOne;
     @FXML
+    private ImageView elevatorTwo;
+    @FXML
     private TextField rightThirdFloorPackegesTextField;
     @FXML
     private TextField elevatorThirdFloorPackegesTextField;
@@ -37,11 +39,13 @@ public class BudynekKontroler implements Listener {
     private TextField rightFirstFloorPackagesTextField;
     private TextField[] rightText;
     private TextField[] elevatorText;
+    private ImageView[] obrazyWind;
     private Silnik silnik;
     private Budynek budynek;
     public void initialize() {
         elevatorText = new TextField[] {elevatorParterPackegesTextField, elevatorFirstFloorPackagesTextField, elevatorSecondFloorPackegesTextField,elevatorThirdFloorPackegesTextField};
         rightText = new TextField[] {rightParterFloorPackegesTextField, rightFirstFloorPackagesTextField, rightSecondFloorPackegesTextField, rightThirdFloorPackegesTextField};
+        obrazyWind = new ImageView[] {elevatorOne, elevatorTwo};
         budynek = new Budynek(1,4,this);
         for (int i = 0; i < 4; i++) {
             final int index = i;

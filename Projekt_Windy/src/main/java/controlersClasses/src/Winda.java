@@ -18,6 +18,7 @@ public class Winda extends Urzadzenie implements Runnable {
     private Silnik silnik;
     private byte kierunek;
     private int id;
+    private int potencjalneZadanie;
     private List<Boolean> zadania = new ArrayList<>();
     private List<Boolean> cele = new ArrayList();
     private List<Listener> kontrolery = new ArrayList<>();
@@ -77,9 +78,11 @@ public class Winda extends Urzadzenie implements Runnable {
 
     }
     public synchronized void PodfierdzWykonanie() {
-        budynek.przekazPotwierdzenieDojazdu(this.id, wyskosc);
-        przyjeteZadaniaWindy.set((int)(wyskosc/5),-1);
-        przyjeteZadaniaOd.set((int)(wyskosc/5),0d);
+        if (przyjeteZadaniaOd.get((int)(wyskosc/5)) != 99) {
+            budynek.przekazPotwierdzenieDojazdu(this.id, wyskosc);
+            przyjeteZadaniaWindy.set((int) (wyskosc / 5), -1);
+            przyjeteZadaniaOd.set((int) (wyskosc / 5), 0d);
+        }
     }
 
 
@@ -115,7 +118,7 @@ public class Winda extends Urzadzenie implements Runnable {
                 odleglosc = 0.1D;
             }
             else {
-                odleglosc = (double) this.cele.size() /1.5;
+                odleglosc = 99;
             }
         }
         else if (this.kierunek*(pietro-wyskosc/5)>=0 && (kierunek == this.kierunek || this.kierunek == 0)) {
@@ -133,7 +136,7 @@ public class Winda extends Urzadzenie implements Runnable {
     {
         for (int i = 0; i < przyjeteZadaniaWindy.size(); i++) {
             if (przyjeteZadaniaWindy.get(i) != -1) {
-                elekcja(i, kierunek); //problem braku zajomości kierunku przywołania, do rozwiązania w przyszłości
+                elekcja(i, kierunek);
             }
         }
     }
@@ -169,16 +172,32 @@ public class Winda extends Urzadzenie implements Runnable {
             } catch (InterruptedException e) {}
             this.refreshOwnTasks();
             boolean isQuestSelected = false;
+            potencjalneZadanie = -1;
             for (int i = (int)(wyskosc/5)+(kierunek+1)/2 ;i < this.zadania.size() && i>=0; i += kierunek) {
                 if (zadania.get(i)) {
                     try {
                         isQuestSelected = true;
-                        jedz((kierunek > 0), i * 5, 0.1);
-                        break;
+                        if (przyjeteZadaniaOd.get(i) == 99 && cele.get(i) == false) {
+                            potencjalneZadanie = i;
+                        }
+                        else {
+                            jedz((kierunek > 0), i * 5, 0.1);
+                            potencjalneZadanie = -1;
+                            break;
+                        }
+
                     }
                     catch (Exception e) {
                         predkosc = 0;
                     }
+                }
+            }
+            if (potencjalneZadanie !=-1) {
+                try {
+                    jedz((kierunek > 0), potencjalneZadanie * 5, 0.1);
+                }
+                catch (Exception e) {
+                    predkosc = 0;
                 }
             }
             if (!isQuestSelected) {
@@ -198,13 +217,6 @@ public class Winda extends Urzadzenie implements Runnable {
                 }
             }
 
-           // if (kierunek%5==0)
-           // {
-              //  try {
-              //      Thread.sleep(10000);
-              //  } catch (InterruptedException e) {}
-
-           // }
             for (Listener k : kontrolery) {
                 k.action();
             }
