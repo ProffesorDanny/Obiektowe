@@ -113,6 +113,8 @@ public class BudynekKontroler implements Listener {
         Parent root = loader.load();
         BudynekStartupControler controller = loader.getController();
         controller.setMainController(this);
+        windy.add(null);
+        windy.add(null);
         controller.setWindy(windy);
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
