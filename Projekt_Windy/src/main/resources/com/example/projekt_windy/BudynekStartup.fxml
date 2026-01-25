@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projekt_windy.BudynekStartupControler">
+   <children>
+      <Label layoutX="269.0" layoutY="29.0" text="Windy">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="133.0" layoutY="81.0" text="Winda 1">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="149.0" layoutY="113.0" text="Silnik" />
+      <ComboBox fx:id="engineOne" layoutX="88.0" layoutY="130.0" prefWidth="150.0" />
+      <Label layoutX="135.0" layoutY="167.0" text="Typ Windy" />
+      <ComboBox fx:id="elevaorOne" layoutX="88.0" layoutY="188.0" prefWidth="150.0" />
+      <Label layoutX="391.0" layoutY="81.0" text="Winda 2">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <Label layoutX="406.0" layoutY="113.0" text="Silnik" />
+      <ComboBox fx:id="engineTwo" layoutX="345.0" layoutY="130.0" prefWidth="150.0" />
+      <Label layoutX="392.0" layoutY="167.0" text="Typ Windy" />
+      <ComboBox fx:id="elevatorTwo" layoutX="345.0" layoutY="188.0" prefWidth="150.0" />
+      <Button fx:id="commitButton" layoutX="266.0" layoutY="285.0" mnemonicParsing="false" onAction="#onCommitButtonClick" text="Potwierdź" />
+   </children>
+</AnchorPane>

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Budynek {
     private ArrayList<Winda> windy = new ArrayList<>();
     private ArrayList<Pietro> pietra = new ArrayList<>();
+    private int szybkoscSymulacji;
 
     public void InformElevators(byte kierunek,int id)
     {
@@ -61,6 +62,11 @@ public class Budynek {
         pietra.get(id).setKierunekZaladunku(kierunek);
     }
 
+    public void setSzybkoscSymulacji(int szybkoscSymulacji)
+    {
+        this.szybkoscSymulacji = szybkoscSymulacji;
+    }
+
     public void zmienEdytowaniePietra(boolean edycja, int id) {
         pietra.get(id).setEdytowanie(edycja);
     }
@@ -80,6 +86,10 @@ public class Budynek {
 
     public int getTowarDoprzeniesieniaWindy(int id) {
         return pietra.get(id).getTowardoprzeniesienia();
+    }
+
+    public int getSzybkoscSymulacji() {
+        return szybkoscSymulacji;
     }
 
     public void interuptionWindy(double wysokosc, int idwindy)
@@ -116,19 +126,20 @@ public class Budynek {
         secondController.zmienObraz(windy.get(id-1).getPredkosc() == 0);
     }
 
-    public Budynek(int iloscWind, int iloscPieter, Listener kontroler){
+    public Budynek(ArrayList<Winda> windy, int iloscPieter, Listener kontroler, int szybkoscSymulacji){
+        this.szybkoscSymulacji = szybkoscSymulacji;
+        this.windy = windy;
         for(int i = 0; i < iloscPieter; i++){
             pietra.add(new Pietro("Pietro"+ String.valueOf(i),i,this));
             Thread t1 = new Thread(pietra.get(i));
             t1.start();
         }
-            for(int i = 0; i < iloscWind; i++){
-                Silnik silnik = new Silnik(80, 1000, "Silneks", 10);
-                windy.add(new Winda(200,600,"Windeks", silnik,this));
-                windy.get(i).addListener(kontroler);
-                Thread t = new Thread(windy.get(i));
-                t.start();
-            }
+        for (Winda winda : windy) {
+            winda.setBudynek(this);
+            winda.addListener(kontroler);
+            Thread t = new Thread(winda);
+            t.start();
+        }
 
     }
 }

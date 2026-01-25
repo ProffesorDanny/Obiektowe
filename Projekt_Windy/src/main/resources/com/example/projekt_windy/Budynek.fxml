@@ -68,6 +68,8 @@
                                                       <Button fx:id="thirdFloorLeftMoveButton" layoutX="666.0" layoutY="14.0" mnemonicParsing="false" onAction="#onThirdFloorLeftMoveButtonClick" prefHeight="26.0" prefWidth="50.0" text="&lt;&lt;" />
                                                       <Button fx:id="thirdFloorRightMoveButton" layoutX="831.0" layoutY="14.0" mnemonicParsing="false" onAction="#onThirdFloorRightMoveButtonClick" prefHeight="26.0" prefWidth="50.0" text="&gt;&gt;" />
                                                       <Label layoutX="730.0" layoutY="18.0" text="Kieunek Przesyłu" />
+                                                      <TextField fx:id="symulationSpeed" alignment="CENTER" layoutX="1381.0" layoutY="41.0" prefHeight="25.0" prefWidth="72.0" text="10" />
+                                                      <Label layoutX="1366.0" layoutY="19.0" text="Szybkosc Symulacji" />
                                                    </children>
                                                 </AnchorPane>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" SplitPane.resizableWithParent="false">

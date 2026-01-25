@@ -190,7 +190,7 @@ public class Pietro extends Urzadzenie implements Runnable {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1000L*10L/budynek.getSzybkoscSymulacji());
             }
             catch (InterruptedException e) {
             }

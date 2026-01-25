@@ -1,6 +1,7 @@
 package com.example.projekt_windy;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleListProperty;
 import javafx.event.ActionEvent;
 import controlersClasses.src.*;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.awt.event.WindowAdapter;
@@ -17,6 +19,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class BudynekKontroler implements Listener {
+    @FXML
+    private TextField symulationSpeed;
     @FXML
     private ImageView elevatorOne;
     @FXML
@@ -41,11 +45,14 @@ public class BudynekKontroler implements Listener {
     private TextField[] elevatorText;
     private ImageView[] obrazyWind;
     private Budynek budynek;
-    public void initialize() {
+
+    public void initialize() throws IOException {
         elevatorText = new TextField[] {elevatorParterPackegesTextField, elevatorFirstFloorPackagesTextField, elevatorSecondFloorPackegesTextField,elevatorThirdFloorPackegesTextField};
         rightText = new TextField[] {rightParterFloorPackegesTextField, rightFirstFloorPackagesTextField, rightSecondFloorPackegesTextField, rightThirdFloorPackegesTextField};
         obrazyWind = new ImageView[] {elevatorOne, elevatorTwo};
-        budynek = new Budynek(2,4,this);
+        ArrayList<Winda> windy = new ArrayList<>();
+        setup(windy);
+        budynek = new Budynek(windy,4,this,10);
         for (int i = 0; i < 4; i++) {
             final int index = i;
             rightText[i].setOnAction(event -> {
@@ -54,7 +61,6 @@ public class BudynekKontroler implements Listener {
                         throw new NumberFormatException();
                     }
                     budynek.setTowardoprzeniesieniaPietra(Integer.parseInt(rightText[index].getText()), index);
-                    System.out.println("Cos");
                 } catch (NumberFormatException e) {
                     System.out.println("Nieprawidłowe dane");
                     rightText[index].setText(String.valueOf(budynek.getTowarDoprzeniesieniaWindy(index)));
@@ -70,6 +76,17 @@ public class BudynekKontroler implements Listener {
                 budynek.zmienEdytowaniePietra(true,index);
             });
         }
+        symulationSpeed.setOnAction(event -> {
+            try {
+                if (Integer.parseInt(symulationSpeed.getText()) < 0) {
+                    throw new NumberFormatException();
+                }
+                budynek.setSzybkoscSymulacji(Integer.parseInt(symulationSpeed.getText()));
+            }
+            catch (NumberFormatException e) {
+                System.out.println("Nieprawidłowe dane");
+            }
+        });
     }
     @Override
     public void action(Object... args)
@@ -89,8 +106,22 @@ public class BudynekKontroler implements Listener {
 
         });
 
-
     }
+
+    private void setup(ArrayList<Winda> windy) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("BudynekStartup.fxml"));
+        Parent root = loader.load();
+        BudynekStartupControler controller = loader.getController();
+        controller.setMainController(this);
+        controller.setWindy(windy);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+        System.out.println("Okno zamknięte, działam dalej!");
+    }
+
+
 
     public void onThirdFloorUpButtonClick(ActionEvent actionEvent) {
        // budynek.przywolajWinde(true,3);

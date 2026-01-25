@@ -49,6 +49,10 @@ public class Winda extends Urzadzenie implements Runnable {
         this.otwarteDrzwi = otwarteDrzwi;
     }
 
+    public void setBudynek(Budynek budynek) {
+        this.budynek = budynek;
+    }
+
     public void jedz(boolean kierunek,double destynacja, double odstep) throws MassException, ReadynessException {
         if (this.getObciazenie() > this.getObciazenie_max()) {
             throw new MassException();
@@ -164,7 +168,7 @@ public class Winda extends Urzadzenie implements Runnable {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(500L*10L/budynek.getSzybkoscSymulacji());
             } catch (InterruptedException e) {}
             this.refreshOwnTasks();
             boolean isQuestSelected = false;
@@ -222,7 +226,7 @@ public class Winda extends Urzadzenie implements Runnable {
     }
 
 
-    public Winda(int waga_pod, int obciazenie_max, String nazwa, Silnik silnik, Budynek budynek) {
+    public Winda(int waga_pod, int obciazenie_max, String nazwa, Silnik silnik) {
         super(waga_pod, obciazenie_max, nazwa);
         this.silnik = silnik;
         this.budynek = budynek;
