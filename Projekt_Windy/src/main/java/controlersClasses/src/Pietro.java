@@ -4,7 +4,7 @@ import javafx.application.Platform;
 
 import java.util.ArrayList;
 
-public class Pietro extends Urzadzenie implements Runnable {
+public class Pietro implements Runnable {
     private int czasoczekiwania;
     private boolean[] oczekiwanie;
     private int towar;

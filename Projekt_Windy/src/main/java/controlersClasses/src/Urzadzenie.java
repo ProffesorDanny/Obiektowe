@@ -29,7 +29,4 @@ public abstract class Urzadzenie {
         this.nazwa = nazwa;
         this.obciazenie = waga_pod;
     }
-    public Urzadzenie( String nazwa) {
-        this.nazwa = nazwa;
-    }
 }
