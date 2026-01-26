@@ -126,10 +126,6 @@ public class BudynekKontroler implements Listener {
 
 
 
-    public void onThirdFloorUpButtonClick(ActionEvent actionEvent) {
-       // budynek.przywolajWinde(true,3);
-    }
-
     public void onThirdFloorDownButtonClick(ActionEvent actionEvent) {
         budynek.przywolajWinde(false,3);
     }
@@ -152,9 +148,6 @@ public class BudynekKontroler implements Listener {
         budynek.przywolajWinde(false,1);
     }
 
-    public void onParterDownButtonClick(ActionEvent actionEvent) {
-
-    }
 
     public void onParterUpButtonClick(ActionEvent actionEvent) {
         budynek.przywolajWinde(true,0);
