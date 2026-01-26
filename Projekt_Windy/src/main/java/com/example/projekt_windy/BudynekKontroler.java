@@ -53,6 +53,7 @@ public class BudynekKontroler implements Listener {
         ArrayList<Winda> windy = new ArrayList<>();
         setup(windy);
         budynek = new Budynek(windy,4,this,10);
+        budynek.addListener(this);
         for (int i = 0; i < 4; i++) {
             final int index = i;
             rightText[i].setOnAction(event -> {

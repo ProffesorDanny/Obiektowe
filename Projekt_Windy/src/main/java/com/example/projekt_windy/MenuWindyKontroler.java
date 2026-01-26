@@ -106,6 +106,7 @@ public class MenuWindyKontroler {
     public void onRightChangeButtonClick(ActionEvent actionEvent) {
         if (przypisanaWinda.getPredkosc() == 0)
         {   try {
+            if (elevatorChangeCargoTextField.getText().isEmpty()) throw new DataFailureException();
             budynek.zaladunek((int)przypisanaWinda.getWyskosc()/5,false,przypisanaWinda.getId()-1,Integer.parseInt(elevatorChangeCargoTextField.getText()));
             actualCargoTextField.setText(String.valueOf(przypisanaWinda.getObciazenie()-przypisanaWinda.getWaga_pod()));
         }
@@ -117,6 +118,7 @@ public class MenuWindyKontroler {
     public void onLeftChangeButtonClick(ActionEvent actionEvent) {
         if (przypisanaWinda.getPredkosc() == 0)
         {   try {
+            if (elevatorChangeCargoTextField.getText().isEmpty()) throw new DataFailureException();
             budynek.zaladunek((int)przypisanaWinda.getWyskosc()/5,true,przypisanaWinda.getId()-1,Integer.parseInt(elevatorChangeCargoTextField.getText()));
             actualCargoTextField.setText(String.valueOf(przypisanaWinda.getObciazenie()-przypisanaWinda.getWaga_pod()));
         }

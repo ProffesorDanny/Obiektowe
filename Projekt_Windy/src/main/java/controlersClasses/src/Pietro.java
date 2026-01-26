@@ -66,7 +66,7 @@ public class Pietro extends Urzadzenie implements Runnable {
         {
             throw new DataFailureException();
         }
-        else if (this.towar==0)
+        else if (this.towar==0 && kierunek)
         {
             return;
         }
@@ -92,7 +92,7 @@ public class Pietro extends Urzadzenie implements Runnable {
             }
 
         }
-        inform();
+        budynek.informKontrolers();
     }
     public void PrzeniesienieTowaru()
     {
@@ -116,7 +116,7 @@ public class Pietro extends Urzadzenie implements Runnable {
                 this.towar -= 5;
             }
         }
-        inform();
+        budynek.informKontrolers();
     }
 
     public void PodfierdzDojazd(boolean kierunek,int id)
@@ -167,13 +167,6 @@ public class Pietro extends Urzadzenie implements Runnable {
         }
 
 
-    }
-    public void inform()
-    {
-        for (Listener l : kontrolery)
-        {
-            l.action();
-        }
     }
 
     public Pietro(String nazwa, int numer, Budynek budynek) {

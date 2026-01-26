@@ -217,10 +217,7 @@ public class Winda extends Urzadzenie implements Runnable {
                     }
                 }
             }
-
-            for (Listener k : kontrolery) {
-                k.action();
-            }
+            budynek.informKontrolers();
 
         }
     }

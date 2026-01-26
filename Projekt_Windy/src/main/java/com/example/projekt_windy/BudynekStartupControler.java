@@ -32,7 +32,7 @@ public class BudynekStartupControler {
     public void initialize()
     {
         Silnik si1 = new Silnik(80, 1000, "TowarowySilnk", 10);
-        Silnik si2 = new Silnik(500, 5000, "OsobowySilnik", 2000);
+        Silnik si2 = new Silnik(500, 5000, "OsobowySilnik", 15);
         engineChoiceBox.getItems().addAll(si1,si2);
         elevatorChoiceBox.getItems().addAll("Winda1", "Winda2");
 

@@ -6,8 +6,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Budynek {
-    private ArrayList<Winda> windy = new ArrayList<>();
+    private ArrayList<Winda> windy;
     private ArrayList<Pietro> pietra = new ArrayList<>();
+    private ArrayList<Listener> kontrolery = new ArrayList<>();
     private int szybkoscSymulacji;
 
     public void InformElevators(byte kierunek,int id)
@@ -21,7 +22,14 @@ public class Budynek {
     {
         Winda.anulujZadanie(id);
     }
-    public void dodajObciarzenie(int id,int obciazenie)
+
+    public void informKontrolers() {
+        for (Listener k : kontrolery) {
+            k.action();
+        }
+    }
+
+    public void dodajObciarzenie(int id, int obciazenie)
     {   if(obciazenie==0)
         {
             windy.get(id).setObciazenie(windy.get(id).getWaga_pod());
@@ -103,6 +111,11 @@ public class Budynek {
     public void resumeWindy(int id)
     {
         pietra.get(id).resume();
+    }
+
+    public void addListener(Listener listener)
+    {
+        this.kontrolery.add(listener);
     }
 
     public StanBudynku getAktualnyStan() {
