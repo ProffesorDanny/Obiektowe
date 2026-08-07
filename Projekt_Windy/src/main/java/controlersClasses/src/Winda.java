@@ -186,7 +186,7 @@ public class Winda extends Urzadzenie implements Runnable {
                             break;
                         }
 
-                    }
+                    } //test czasu
                     catch (MassException | ReadynessException e) {
                         predkosc = 0;
                     }
